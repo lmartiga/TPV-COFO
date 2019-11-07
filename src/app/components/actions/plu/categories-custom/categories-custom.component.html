@@ -1,0 +1,43 @@
+<div [hidden]="showSearchResult" style="height: 100%;width: 100%">
+    <div class="row" id="CurrentCategories" style="background: #cbc4bc;height: 64%;">
+        <h6 class="options-item-title col-md-12">{{currentCategories}}</h6>
+        <div class="col-md-12" style="background: #cbc4bc;">
+            <div *ngIf="contadorFinArticulos > 15" class="col-xl-2 col-sm-3 col-xs-6 Rectangle-Copy-19 CafPLU" (click)="actualizarArticulos('-')">
+                <img src="assets/images/ico-arrow-less.svg">
+            </div>
+            <div id="CurrentPLUItem{{in}}" class="col-xl-2 col-sm-3 col-xs-6 Rectangle-Copy-19 CafPLU CurrentPLUItem" *ngFor="let currentPLUProduct of listarArticulos(); let in = index" (click)="onSelectedProductById(currentPLUProduct.productId, in)">
+                <span>{{currentPLUProduct.description}}</span>
+            </div>
+            <div *ngIf="contadorFinArticulos <= cantidadCurrentPLUItem()" class="col-xl-2 col-sm-3 col-xs-6 Rectangle-Copy-19 CafPLU" (click)="actualizarArticulos('+')">
+                <img src="assets/images/ico-arrow-more.svg">
+            </div>
+        </div>
+    </div>
+    <div class="row" style="background: #cbc4bc;height: 36%;">
+        <div style="height: 20%;">
+            <h6 class="options-item-title col-md-12">{{getLiteral('categories_custom_component', 'header_familias')}}</h6>
+        </div>
+        <div class="col-md-12" style="background: #cbc4bc;height: 80%;">
+
+            <div *ngIf="contadorFinCategoria > 7" class="col-xl-2 col-sm-3 col-xs-6 Rectangle-Copy-13 CategoriaPlu-Simbol " style="background-color: #ffffff!important" (click)="actualizarCategorias('-')">
+                <img src="assets/images/ico-arrow-less.svg">
+            </div>
+
+            <div class="col-md-12 CategoriaPlu Rectangle-Copy-13" id="CategoriaPlu-{{i}}" style.background-color="{{getColorString(i)}}" *ngFor="let pluItem of listarcategoria(); let i = index" checked="false" (click)="setCurrentPLUItem(pluItem.id, i)">
+                <div class="row">
+                    <div class="col-12">
+                        <img *ngIf="pluItem.imageHtmlBase64String" [src]="pluItem.imageHtmlBase64String" style="width: 40px; height: 40px;">
+                    </div>
+                    <div style="width: 96%;margin-left: 2px;" class="col-12">
+                        <span>{{pluItem.description}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="contadorFinCategoria <= pluItems.length" class="col-xl-2 col-sm-3 col-xs-6 Rectangle-Copy-13 CategoriaPlu-Simbol " style="background-color: #ffffff!important" (click)="actualizarCategorias('+')">
+                <img src="assets/images/ico-arrow-more.svg">
+            </div>
+
+        </div>
+    </div>
+</div>

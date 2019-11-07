@@ -1,0 +1,115 @@
+<h5 class="auxiliar-action-title">{{titulo}}</h5>
+<div *ngIf="!MsgValidateDebt" class="col-12">
+  <div class="tpv-mixt-payment-method">
+    <button md-raised-button class="col-xs-4" (click)="payment(i)" (click)="triggleClickEventOnInput()"
+      [ngClass]="{'selected-class-name' : selectedIndex === i}"
+      *ngFor="let paymentMethod of paymentMethodList; let i = index" (click)="inputPayment.select()">
+      <ng-container *ngIf="!paymentMethod.panelDescription">{{paymentMethod.description}}</ng-container>
+      <ng-container *ngIf="paymentMethod.panelDescription">{{paymentMethod.panelDescription}}</ng-container>
+    </button>
+  </div>
+  <div class="col-lg-12 col-md-12 tpv-mixt-input">
+    <form (ngSubmit)="setPayment()">
+      <input class="col-xs-12 form-control txtRight" tpvKeyboard  (enter)="setPayment()" id="controlInputNumber"
+        [(ngModel)]="inputNumber" name="controlInputNumber" #inputPayment #controlInputNumber="ngModel"
+        (ngModelChange)="setInfoAboutPaymentSecondaryCurrency()"
+        [disabled]="!paymentMethodList || !paymentMethodList[selectedIndex] || pendiente == 0" autocomplete="off"
+        (click)="inputPayment.select()">
+    </form>
+    <div class="change-factor col-xs-12 noPV"
+      *ngIf="secondaryCurrency && selectedIndex && paymentMethodList[selectedIndex].type == paymentMethodTypeWithSecondaryCurrency">
+      <span class="change-factor-general">Factor cambio: 1 {{secondaryCurrency.symbol}} = {{changeFactorFromSecondary}}
+        {{baseCurrency.symbol}}</span>
+      <span class="change-factor-current">actual: {{inputNumberInBaseCurrency}} {{baseCurrency.symbol}}</span>
+    </div>
+  </div>
+  <div class="col-xs-12 divOverflow noPTop">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="txtCenter">
+            <md-icon (click)="deleteAllPayments()" class="material-icons cancel">cancel</md-icon>
+          </th>
+          <th class="txtLeft">Medio de pago</th>
+          <th class="txtRight"></th>
+          <th *ngIf="baseCurrency" class="txtRight">{{baseCurrency.symbol}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listOfPayments">
+          <td class="txtCenter">
+            <md-icon (click)="deleteFromlistOfPayments(item)" class="material-icons cancel">cancel</md-icon>
+          </td>
+          <td class="txtLeft">{{item.method.description}}
+            <ng-container
+              *ngIf="secondaryCurrency && paymentMethodTypeWithSecondaryCurrency == item.method.type && item.method.currencyType == baseCurrency.priorityType">
+              {{baseCurrency.symbol}}</ng-container>
+            <ng-container
+              *ngIf="secondaryCurrency && paymentMethodTypeWithSecondaryCurrency == item.method.type && item.method.currencyType == secondaryCurrency.priorityType">
+              {{secondaryCurrency.symbol}}</ng-container>
+          </td>
+          <td *ngIf="item.secondaryCurrencyTakenAmount" class="txtRight">({{item.secondaryCurrencyTakenAmount}}
+            {{currencySelected.symbol}})</td>
+          <td *ngIf="!item.secondaryCurrencyTakenAmount" class="txtRight"></td>
+          <td class="txtRight">{{item.primaryCurrencyTakenAmount.toFixed(2)}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tpv-mixt-payment-amount">
+    <div class="col-sm-6 col-xs-12 noP">
+      <h5 class="col-xs-12 noPV">Pendiente</h5>
+      <div
+        [ngClass]="pendiente == 0 ? 'col-xs-12 txt-big borderH-accent' : 'col-xs-12 txt-big borderH-accent mat-color-warn'">
+        <strong class="total-amount">{{pendiente}}</strong>
+        <strong *ngIf="baseCurrency">{{baseCurrency.symbol}}</strong>
+      </div>
+    </div>
+    <div class="col-sm-6 col-xs-12 noP">
+      <h5 class="col-xs-12 noPV txtRight">Cambio</h5>
+      <div class="col-xs-12 txt-big borderH-accent txtRight">
+        <strong class="total-amount">{{changeDelivered}}</strong>
+        <strong *ngIf="baseCurrency">{{baseCurrency.symbol}}</strong>
+      </div>
+    </div>
+  </div>
+<div [ngClass]="showActions ? 'button-bottom' : 'button-bottom visibleHidden'">
+  <ng-template #collectButton let-cssClass="class">
+    <button md-raised-button [ngClass]="cssClass" (click)="requestCollectClick()" [disabled]="isButtonDisabled()">Cobrar</button>
+  </ng-template>
+  <ng-template #buttonAceptar let-cssClass="class">
+      <button md-raised-button [ngClass]="cssClass" (click)="requestEndSale(false)" [disabled]="isButtonDisabled()">Aceptar</button>
+  </ng-template>
+  <ng-container [ngSwitch]="collectionButtonVisibility">
+    <ng-container *ngSwitchCase="0">
+      <ng-container *ngTemplateOutlet="collectButton;context:{class:'col-xs-12'}"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="1">
+      <ng-container *ngTemplateOutlet="invoiceButton;context:{class:'col-xs-12'}"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="2">
+      <ng-container  *ngTemplateOutlet="collectButton;context:{class:'col-xs-6'}"></ng-container>
+      <ng-container class="col-xs-6" *ngTemplateOutlet="invoiceButton;context:{class:'col-xs-6'}"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="3">
+        <ng-container *ngTemplateOutlet="buttonAceptar;context:{class:'col-xs-12'}"></ng-container>
+      </ng-container>
+  </ng-container>
+</div>
+</div>
+
+<div *ngIf="MsgValidateDebt" class="col-lg-12">
+  <h3>{{MsgValidateDebtTex}} </h3>
+</div>
+
+<div id="tela-document-search-anulacion-parcial" *ngIf="!(paymentMethodList?.length > 0)" class="tela">
+  
+</div>
+
+<div id="spinner-container" *ngIf="!(paymentMethodList?.length > 0)" class="spinner-container" >
+  <ng-container>
+    <div class="col-xs-12 noP spinnerSlidder">
+      <md-progress-spinner mode="indeterminate"></md-progress-spinner>
+    </div>
+  </ng-container>
+</div>

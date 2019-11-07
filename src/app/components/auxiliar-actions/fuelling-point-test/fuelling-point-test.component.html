@@ -1,0 +1,43 @@
+<h5 class="auxiliar-action-title">{{titleLiteral}}</h5>
+<div class="tpv-fuelling-point-test">
+<form #testFuellingPoints="ngForm" novalidate (ngSubmit)="onSubmit()">
+<div class="col-xs-12">
+    <legend class="legend">{{subtitleLiteral}}</legend>
+    <button md-raised-button type="button" class="col-xs-6" [ngClass]="{'selected' : withReturnSelected === false}" (click)="withReturnSelected = false">{{withNoReturnLiteral}}</button>
+    <button md-raised-button type="button" class="col-xs-6" [ngClass]="{'selected' : withReturnSelected === true}" (click)="withReturnSelected = true">{{withReturnLiteral}}</button>
+</div>
+<ng-container *ngIf="withReturnSelected">
+    <div class="col-xs-12">
+        <div *ngFor="let currentFuellingTank of availableFuellingTanks; let i = index">
+            <button md-raised-button type="button" class="col-xs-6" (click)="returnTankSelected(currentFuellingTank)"
+            [ngClass]="{'selected-class-name' : currentFuellingTank?.id == returnTankId}">
+            {{tankLiteral}} {{currentFuellingTank.caption}}
+            </button>
+        </div>
+    </div>
+</ng-container>
+<div class="col-xs-12">
+    <input tpvKeyboard
+        class = "form-control txtRight"
+        name="deviation"
+        [(ngModel)] = "fuellingTestEntryData.deviation"
+        #deviation = "ngModel"
+        type = "text"
+        id = "deviation"
+        required
+        placeholder = "{{deviationLiteral}}"
+        step = ".01">
+</div>
+<div class="col-xs-12" *ngIf="deviation.invalid && (deviation.dirty || deviation.touched)">
+    <div *ngIf="deviation.errors.required" class="txt-error">{{requiredField}}</div>
+</div>
+<div class="col-xs-12">
+    <textarea tpvKeyboard [required]="!withReturnSelected" name="observations" [(ngModel)]="fuellingTestEntryData.observations" #observations = "ngModel" rows = "8" maxlength="200" class="col-xs-12 form-control" placeholder="{{observationsLiteral}}"></textarea>
+</div>
+<div class="col-xs-12" *ngIf="!withReturnSelected && observations.invalid && observations.touched">
+    <div *ngIf="observations.errors.required" class="txt-error">{{requiredField}}</div>
+</div>
+<div class="button-bottom">
+    <button md-raised-button type ="submit" [disabled]="testFuellingPoints.invalid || (!withReturnSelected && fuellingTestEntryData.observations == '')" class="col-xs-12">{{textButtonLiteral}}</button>
+</div>
+</form>

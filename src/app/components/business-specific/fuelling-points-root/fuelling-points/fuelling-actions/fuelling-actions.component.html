@@ -1,0 +1,11 @@
+<div class="fuelling-actions" style="margin-left:10px;">
+  <button class="raised-button-yellow" [ngClass]="{checked:btnStopChecked}" (click)="btnStopClick()" hidden="false">
+    {{btnStopChecked ? getLiteral('fuelling_actions_component','button_FuellingPoints_Resume'): getLiteral('fuelling_actions_component','button_FuellingPoints_Stop') }}
+  </button>
+  <button class="raised-button-yellow" (click)="btnWaitOpsClick()" hidden="false" >
+    {{getLiteral('fuelling_actions_component','button_FuellingPoints_Pending')}}
+  </button>
+  <button class="raised-button-yellow" [ngClass]="{checked:btnNightChecked}" (click)="btnNigthClick()" hidden="false">
+    {{btnNightChecked ? getLiteral('fuelling_actions_component','button_FuellingPoints_Day'): getLiteral('fuelling_actions_component','button_FuellingPoints_Night')}}
+  </button>
+</div>

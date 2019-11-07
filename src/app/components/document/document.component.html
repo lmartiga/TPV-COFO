@@ -1,0 +1,185 @@
+<div style="height: 10%;" >
+    <button md-raised-button (click)="onCloseSessionOperator()" style="height: 90%; min-height: 0px;margin-top: 2%;"    class="col-xs-6 btn-content">{{getLiteral('document_component', 'button_Ticket_Operator')}}
+        <div [hidden]="operador == null ? true : false" >
+            <span style="padding-top: 1.5px">{{ operador }}</span>
+        </div>
+        <div [hidden]="!currentDocument.showAlertInsertOperator">
+            <span class="btn-inside popInfinite">{{getLiteral('document_component', 'button_Ticket_OperatorLack')}}</span>
+        </div>
+    </button>
+        
+    <button md-raised-button [disabled]="operador == null ? true : false"  id="cliente"
+       (click)="btnRequestCustomerClick()"  style="height: 90%; margin-top: 2%;min-height: 0px;" class="col-xs-6 btn-content">{{getLiteral('document_component', 'button_Ticket_Customer')}}
+        <div [hidden]="customer_businessName == null ? true : false">
+            <span style="padding-top: 1.5px">{{ customer_businessName }}  {{ customer_matricula === undefined ? '' : customer_matricula !== '' ? '/ '+ customer_matricula : customer_matricula}}</span>
+        </div>
+        <div [hidden]="!currentDocument.showAlertInsertCustomer || operador == null ? true : false">
+            <span class="btn-inside popInfinite">{{getLiteral('document_component', 'button_Ticket_CustomerLack')}}</span>
+        </div>
+    </button>
+</div>
+<!-- TODO: "selectChange" está deprecated en la nueva versión de material -->
+<md-tab-group [@.disabled]="true" dynamicHeight="false" (selectChange)="documentSelected($event)"
+    [(selectedIndex)]="selectedDocumentIndex" style="width: 100%;">
+    <div *ngFor="let document of documents; let pos = index">
+        <md-tab label="Ticket {{pos + 1}}">
+            <div>
+                <!-- Lineas del document -->
+                <div [ngClass]="operatorHasValue(document.operator) &&
+                          customerHasValue(document.customer) ? 'divOverflow' : 'divOverflow disabled'">
+                    <table class="table" id="tableDocuments{{pos}}">
+                        <thead style="position: absolute;">
+                            <tr id="trTableDocuments"
+                                [ngClass]="{'disabled': disabledButtonResetDocument}">
+                                <th style="text-align: center;width: 48px;border-bottom:0px;" id='idcancel'
+                                    [hidden]="changed.typeCall !== 0">
+                                    <md-icon (click)="resetDocument()" class="material-icons cancel">cancel</md-icon>
+                                </th>
+                                <th style="text-align: left;width: 58px;border-bottom:0px;" id="idcantidad">{{getLiteral('document_component', 'columnHeader_Ticket_Quantity')}}</th>
+                                <th style="text-align: left;width: 197px;border-bottom:0px;" id="iddescripcion">{{getLiteral('document_component', 'columnHeader_Ticket_Description')}}
+                                </th>
+                                <th style="text-align: left;width: 56px;border-bottom:0px;" id="idPVP"
+                                    [hidden]="changed.typeCall !== 0">{{getLiteral('document_component', 'columnHeader_Ticket_PVP')}}</th>
+                                <th style="text-align: left;width: 39px;border-bottom:0px;" id="idporcentaje"
+                                    [hidden]="changed.typeCall !== 0">{{getLiteral('document_component', 'columnHeader_Ticket_Percentaje')}}</th>
+                                <th style="text-align: right;width: 56px;border-bottom:0px; font-weight: bold; font-family:'TypeBold',Repsol;" id="idsimbol" [hidden]="changed.typeCall !== 0">
+                                    {{baseCurrency.symbol}}</th>
+                                <th style="text-align: right;width: 56px;border-bottom:0px;" id="idsimbolDescript" [hidden]="changed.typeCall == 0">
+                                    {{baseCurrency.description}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="height:42px;"></tr>
+                            <!-- Validacion para permitir modificaciones y eliminiacion -->
+                            <tr style="background-color: #ffffff!important;" class="selecArticulo" id="selecArticulo-{{i}}" (click)="line.quantity > 0 && line.isRemoved!=false && line.isEditable!=false ? editLine(i) : false"
+                                *ngFor="let line of document.lines; let i = index; let lastcall=last">    
+                                <ng-container *ngIf="!line.isLoyaltyRedemption">
+                                    <!-- Validacion para que aparezca el boton eliminar habilitado -->
+                                    <td id='idcancel' class="txtCenter buttonCancel" style="background-image: linear-gradient(104deg, #aca39a 78%, #ffffff 0%); padding-left: 1%; padding-right: 3%">
+                                        <!--<md-icon
+                                            *ngIf="(line.quantity > 0) && (line.isRemoved!=false) && (line.isEditable!=false) "
+                                            (click)="deleteLine($event, i);"  class="material-icons delete" style="color: #ffffff !important;">delete
+                                        </md-icon>-->
+                                        <img src="assets/images/ico-delete-white.png" class="material-icons delete" *ngIf="(line.quantity > 0) && (line.isRemoved!=false) && (line.isEditable!=false) "
+                                        (click)="deleteLine($event, i);">
+                                    </td>
+                                    <td style="text-align: left;width: 58px;" id="idcantidad">{{ line.quantity }}</td>
+                                    <td style="text-align: left;width: 197px;" id="iddescripcion">{{ line.description }}
+                                    </td>
+                                    <td style="text-align: left;width: 56px;" id="idPVP"
+                                        [hidden]="changed.typeCall !== 0">
+                                        {{ line.priceWithTax}}</td>
+                                    <td style="text-align: left;width: 39px;" id="idporcentaje"
+                                        [hidden]="changed.typeCall !== 0">{{ line.discountPercentage }}</td>
+                                    <td style="text-align: right;width: 56px; font-weight: bold;font-family:'TypeBold',Repsol;" id="idsimbol">
+                                        {{ line.totalAmountWithTax|number:formatConfig.moneyPipeFormat  }}</td>                                      
+                                        <span class="spa" [hidden] = "true" *ngIf="lastcall">{{backG(i)}}</span>
+                                    </ng-container>
+                            </tr>
+                            <ng-container *ngFor="let line of document.lines; let i = index">
+                                <tr class="tr border-promotion" *ngFor="let promo of line.appliedPromotionListHTML; let i = index">
+                                    <td class="txtCenter">
+                                        <md-icon class="material-icons promotion">confirmation_number</md-icon>
+                                    </td>
+                                    <td class="txtLeft">{{ promo.numberOfTimesApplied }}</td>
+                                    <td class="txtLeft">{{ promo.description }}</td>
+                                    <td class="txtLeft"> </td>
+                                    <td class="txtLeft"> </td>
+                                    <td class="txtRight">{{ 0 - promo.discountAmountWithTax }}</td>
+                                </tr>
+                            </ng-container>
+                            <ng-container *ngFor="let line of document.lines">
+                                <tr class="border-promotion" *ngIf="line.isLoyaltyRedemption === true">
+                                    <td class="txtCenter">
+                                        <md-icon class="material-icons promotion">confirmation_number</md-icon>
+                                    </td>
+                                    <td class="txtLeft">{{ line.quantity }}</td>
+                                    <td class="txtLeft">{{ line.description }}</td>
+                                    <td class="txtLeft"></td>
+                                    <td class="txtLeft"></td>
+                                    <td class="txtRight">{{ line.totalAmountWithTax }}</td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                    <div id="imagenLogo">
+
+                    </div>
+                    <!--<div style="text-align: center;position: absolute;bottom: 0px;height: 31%;width: 29%;margin-left: 34%;">
+                        <img src="assets/images/ticket-logo-new.png" class="ticket_logo">
+                    </div>-->
+                </div>
+            </div>
+        </md-tab>       
+    </div>  
+</md-tab-group>
+<section style="height: 54%; position: absolute; z-index: 1000; top: 27%; width: 101%; background:white;" *ngIf="alerta">
+    <tpv-confirm-action-static [externalpopup]="alerta">
+    </tpv-confirm-action-static>
+</section>
+<!-- Summary -->
+<section [hidden]="changed.typeCall !== 0" [ngClass]="documents &&
+                      selectedDocumentIndex != undefined &&
+                      documents[selectedDocumentIndex] &&
+                      operatorHasValue(documents[selectedDocumentIndex].operator) &&
+                      customerHasValue(documents[selectedDocumentIndex].customer) ? 'summary' : 'summary disabled'">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxs-4 total">
+        <h4>{{getLiteral('document_component', 'literal_Total')}}</h4>
+        <button md-icon-button class="promotion-btn" (click)="previewPromotions()" [disabled]="disablePreviewPromotionsButton() || isDocumentBlocked()">
+            <md-icon class="material-icons promotion">loyalty</md-icon>
+        </button> 
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xxs-2 txtcenter" style="margin-top: 42px;">
+        <button [style.display]="!visibleButtons() ? 'none' : 'block'" type="button" (click)="moverProducto('A')"
+            class="btn btn-default btn-circle">
+            <span class="glyphicon glyphicon-chevron-up"></span>
+        </button>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xxs-2 txtcenter" style="margin-top: 42px;">
+        <button [style.display]="!visibleButtons() ? 'none' : 'block'" type="button" (click)="moverProducto('B')"
+            class="btn btn-default btn-circle">
+            <span class="glyphicon glyphicon-chevron-down"></span>
+        </button>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxs-4 ammount txtRight posicionamiento" [ngStyle]="{'margin-left':getMargin(documents[selectedDocumentIndex].totalAmountWithTax),'width':getWidth(documents[selectedDocumentIndex].totalAmountWithTax) }">
+        <h4>
+            {{ documents[selectedDocumentIndex].totalAmountWithTax - globalPromo |number:formatConfig.moneyPipeFormat }}
+            <ng-container *ngIf="baseCurrency">{{baseCurrency.symbol}}</ng-container>
+        </h4>
+    </div>    
+</section>
+<section [hidden]="changed.typeCall === 0" style="height: 100px; width: 100%;background-color: white">
+    <hr style="border-top:2px solid #EAE7E4;text-align: center; width: 93%;margin: 0px 0% 0px 3%;" />
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12" style="height: 32.5%;padding: 0px 2% 0px 2%;">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 col-xxs-8" style="height: 100%;padding: 0px;">
+            <h4 style="font-weight: bold;">{{getLiteral('document_component', 'Total_Venta')}}</h4>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxs-4" style="text-align: right;height: 100%;padding: 0px;">
+            <h4 style="font-weight: bold;">
+                {{ documents[selectedDocumentIndex].totalAmountWithTax |number:formatConfig.moneyPipeFormat }}</h4>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12"
+        style="height: 32.5%;padding: 0px 2% 0px 2%;; background-color: #f7f6f5;color: #6e6259;">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 col-xxs-8" style="height: 100%;padding: 0px;">
+            <h4 style="font-weight: bold;">{{getLiteral('document_component', 'Pendiente_Efectivo')}}</h4>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxs-4" style="text-align: right;height: 100%;padding: 0px;">
+            <h4 style="font-weight: bold;">{{changed.changePend | number:formatConfig.moneyPipeFormat}}</h4>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12"
+        style="height: 32.5%;padding: 0px 2% 0px 2%;background-color: #EAE7E4;">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 col-xxs-8" style="height: 100%;padding: 0px;">
+            <h4 style="color: #6e6259;font-weight: bold;">{{getLiteral('document_component', 'Cambio')}}</h4>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxs-4" style="text-align: right;height: 100%;padding: 0px;">
+            <h4 style="color: #6e6259;font-weight: bold;">{{changed.totalChange | number:formatConfig.moneyPipeFormat}}
+            </h4>
+        </div>
+    </div>
+</section>
+<tpv-document-actions [currentDocument]="documents[selectedDocumentIndex]"
+    [currentChanged]="arrayChanged[selectedDocumentIndex]" [formatConfig]="formatConfig"
+    (saleFinished)="onSaleFinished($event)"></tpv-document-actions>
+<ng-container #documentContainerHost></ng-container>

@@ -1,0 +1,142 @@
+.numeric-keyboardChangeDelivered .text{
+  width: 100%;
+  height: 95%;
+  font-size: 2em;
+  color: red;
+  text-align: center;
+  border-radius: 4px 4px 4px 4px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  border: 0px solid #fff;
+  }
+  .numeric-keyboardChangeDelivered .text::placeholder {
+    font-family: "TypeBold", Repsol;
+    color: #003b5c;
+    opacity: 1;
+    font-weight: bold;
+  }
+
+  .RectangleNumChangeDelivered {
+    width: 74%;
+    height: 100%;
+    background-color: #003b5c;
+    border-radius: 4px;
+    float: right;
+    vertical-align: bottom;
+  }
+ 
+  .botonEurosChangeDelivered {
+    width: 100%;
+    margin-bottom: 5%;
+    border-radius: 4px;
+    border: solid 0px;
+    box-shadow: 0 0 0 0;
+    min-width: 0px;
+  }
+  .ilust_ticket_ok {
+    width: 127px;
+    height: 141px;
+    display: block;
+    margin: auto;
+    object-fit: contain;
+    margin-bottom: 2%;
+  }
+  .ico_alert {
+    width: 41.7px;
+    height: 30px;
+    border-radius: 4.5px !important;
+  }
+  .button_Alert_right {
+    float: right;
+    height: 100%;
+    border-radius: 4px;
+    background-color: #e40028;
+     padding: 0px 4% 0px 2%;
+     color: white;
+     min-height: 0px;
+     min-width: 0px;
+     width: 30%;
+  }
+
+  .button_ico_back_left {
+    float: left;
+    height: 100%;
+    padding: 0px 4% 0px 4%;
+    border-radius: 4px;
+    min-height: 0px;
+    min-width: 0px;
+    width: 30%;
+  }
+
+  .custom-button-delete {
+    width: 33%;
+    padding: 1.4%;
+    // min-height: 50px;
+    min-width: 0px;
+    float: left;
+    background-color: #003b5c;
+  }
+  .custom-button-numeric {
+    width: 33%;
+    padding: 3%;
+    // min-height: 50px;
+    min-width: 0px;
+    float: left;
+    background-color: #003b5c;
+    color: white;
+  }
+    // .custom-button-numeric .mat-button-wrapper {
+    //   font-family: "TypeRegular", Repsol !important;
+    // }
+  .content-button-confirm {
+    margin: 14.2px 2% 2%;
+    padding-right: 3%;
+    height: 50px;
+  }
+  .custom-button-confirm {
+    height: 50px !important;
+    border: solid 1px #ff8200;
+    box-shadow: 0px 1px #001521;
+  }
+    .custom-button-confirm:disabled {
+      border: solid 1px #FFC17F;
+    }
+  .container-buttons-keyboard-numeric {
+    margin-left: 2%; padding-right: 3%;
+  }
+  .buttons-keyboard-numeric {
+    height: 100%;
+    margin-left: 1.5px
+  }
+
+.borderRightBottom, .borderBottom, .borderRight, .noBorderButton, .borderRight {
+  border: initial;
+  box-shadow: initial;
+  height: 25%;
+}
+@media (min-width: 1024px) {
+  .key-button-2 {
+    min-height: 54px !important;
+  }
+  .keyboard-number-individual {
+    font-size: 1em;
+  }
+}
+.key-button-2 {
+  min-height: 1px;
+  height: auto;
+}
+.keyboard-number-individual {
+  font-family: 'TypeRegular', Repsol !important;font-size: 1.5em;
+}
+
+.borderRightBottom {
+  border-bottom: solid 0.9px #ffffff;
+  border-right: solid 0.9px #ffffff;
+}
+.borderBottom {
+  border-bottom: solid 0.9px #ffffff;
+}
+.borderRight {
+  border-right: solid 0.9px #ffffff;
+}

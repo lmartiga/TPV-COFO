@@ -1,0 +1,28 @@
+<h5 class="auxiliar-action-title">{{headerLiteral}}</h5>
+<form id="zeroPricedForm" #zeroPricedForm="ngForm" (ngSubmit)="sendLine($event.target)">
+	<div class="col-xs-12">
+		<h4>{{enterPriceLiteral}}</h4>
+		<input
+			tpvKeyboard
+			class="form-control txtRight"
+			[(ngModel)]="articlePrice"
+			name="priceWithTax"
+			type="text"
+			id="priceWithTax"
+			required
+			#priceWithTax="ngModel"
+			placeholder="{{pricePlaceholderLiteral}}"
+			autocomplete="off"
+			(enter)="sendLine($event.target)"
+			(click)="$event.target.select()">
+		<div *ngIf="priceWithTax.invalid && (priceWithTax.dirty || priceWithTax.touched)">
+			<div *ngIf="priceWithTax.errors?.required" class="txt-error">{{notAValidPriceLiteral}}</div>
+		</div>
+	</div>
+	<div class="button-bottom">
+		<button md-raised-button class="col-xs-12" type="submit" [disabled]="zeroPricedForm.invalid">{{submitLiteral}}</button>
+	</div>
+</form>
+
+<!-- NOTA: valida con type=number de HTML5 y se validan campos con expresión regular en lógica
+Juntos en el HTML colisionarían, porque type number con malos formatos como 5,5,5 se transforma a vacío -->

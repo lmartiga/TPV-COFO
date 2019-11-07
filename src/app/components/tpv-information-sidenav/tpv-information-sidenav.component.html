@@ -1,0 +1,20 @@
+<div class="col-xs-12 information-title">
+    <img src={{logo}} alt="Responsive entreprise logo">
+    <span>{{storeName}}</span>
+</div>
+<div class="col-xs-12 information-item">
+    <h6 class="noM">{{getLiteral('tpv_information_sidenav_component','literal_OperatorPanel_POS')}}</h6>
+    <h5 class="noM">{{tpvNumber}}</h5>
+</div>
+<div class="col-xs-12 information-item">
+    <h6 class="noM">{{getLiteral('tpv_information_sidenav_component','literal_OperatorPanel_Version')}}</h6>
+    <h5 class="noM">{{tpvVersion}}</h5>
+</div>
+<div *ngIf="false" class="button-bottom">
+    <button md-raised-button
+            color="primary1"
+            class="col-xs-12"
+            (click)="openHelp()">
+            {{getLiteral('tpv_information_sidenav_component','literal_help')}}
+    </button>
+</div>

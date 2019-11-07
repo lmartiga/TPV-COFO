@@ -1,0 +1,82 @@
+.numeric-keyboardChangeDelivered .text{
+  width: 100%;
+  height: 95%;
+  font-size: 2.3em;
+  color: #003b5c;
+  text-align: center;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border: 0px solid #fff;
+  }
+
+  .numeric-keyboardChangeDelivered .text::placeholder {
+    font-family: "TypeBold", Repsol;
+    color: #003b5c;
+    opacity: 1;
+    font-weight: bold;
+    font-size: .8em !important;
+  }
+
+  .content-button-confirm {
+    margin: 2%;
+    padding-right: 3%;
+  }
+  .custom-button-confirm {
+    height: 50px !important;
+    border: solid 1px #ff8200;
+    box-shadow: 0px 1px #001521;
+  }
+  .custom-button-delete {
+    width: 33%;
+    padding: 1.4%;
+    min-height: 0px;
+    min-width: 0px;
+    float: left;
+    background-color: #003b5c;
+  }
+  .custom-button-numeric {
+    width: 33%;
+    height: 22% !important;
+    padding: 3%;
+    min-height: 0px;
+    max-height: 25%;
+    min-width: 0px;
+    float: left;
+    background-color: #003b5c;
+    color: white
+  }
+.container-buttons-keyboard-static {
+  margin-left: 2%;
+  padding-right: 3%;
+  margin-top: 0%;
+}
+.buttons-keyboard-numeric {
+  height: 100%;
+  margin-left: 1.5px
+}
+.borderRightBottom, .borderBottom, .borderRight, .noBorderButton, .borderRight {
+  border: initial;
+  box-shadow: initial;
+  height: 25%;
+}
+@media (min-width: 1024px) {
+  .key-button-2 {
+    min-height: 25% !important;
+  }
+}
+.key-button-2 {
+  min-height: 1px;
+  height: auto;
+}
+
+.borderRightBottom {
+  border-bottom:  solid 0.9px #457691;
+  border-right: solid 0.9px #457691;
+}
+.borderBottom {
+  border-bottom: solid 0.9px #457691;
+}
+.borderRight {
+  border-right: solid 0.9px #457691;
+}

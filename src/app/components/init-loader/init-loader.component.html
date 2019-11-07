@@ -1,0 +1,33 @@
+<ng-container *ngIf="active">
+  <div class="loaderInit" [@loaderState]="loaderState">
+    <!--NOTA 10/11/17 PARA LAS ACCIONES DENTRO DE LA APLICACIÓN UTILIZAR EL PROGRESS SPINNER DE MATERIAL DESIGN, ESTE ES SOLO PARA EL INICIO. El atributo color
+    del progress spinner debe ser accent. Os pongo la url del spinner: https://material.angular.io/components/progress-spinner/overview-->
+    <div class="loaderInit-img-wrapper">
+      <div class="loaderInit-img animated zoomIn delay1">
+        <div class="loaderInit-spinner">
+          <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200" viewBox="0 0 52.92 52.92" version="1.1" id="svg8">
+            <defs id="defs2">
+              <linearGradient id="linearGradientIcon">
+                <stop offset="0" id="loaderInit-color1"/>
+                <stop offset="1" id="loaderInit-color2"/>
+              </linearGradient>
+            </defs>
+            <g id="layer1" transform="translate(0,-244.08332)">
+              <path  d="M 26.458984,297 C 11.855875,297 0,285.14607 0,270.54296 c 0,-14.60311 11.855875,-26.45898 26.458984,-26.45898 14.60311,0 26.457032,11.85587 26.457032,26.45898 C 52.916016,285.14607 41.062094,297 26.458984,297 Z m 0,-1.58985 c 13.743117,0 24.867188,-11.12407 24.867188,-24.86719 0,-13.74311 -11.124071,-24.86718 -24.867188,-24.86718 -13.743116,0 -24.8671871,11.12407 -24.8671871,24.86718 0,13.74312 11.1240711,24.86719 24.8671871,24.86719 z" style="color-interpolation-filters:linearRGB;color-interpolation:sRGB;color-rendering:auto;fill:url(#linearGradientIcon);"/>
+            </g>
+          </svg>
+        </div>
+        <div class="loaderInit-icon">
+          <svg>
+            <use xlink:href="assets/images/ic_icon_preloader.svg"></use>
+          </svg>
+        </div>
+          <img src="assets/images/img_logo.png" class="pop"><!--SE CARGA EL LOGO DEL CLIENTE-->
+      </div>
+      <div class="loaderInit-info">
+        <md-progress-bar mode="determinate" [value]="progressBarValue"></md-progress-bar>
+        <p>{{synchronizationStatus}}</p>
+      </div>
+    </div>
+  </div>
+</ng-container>

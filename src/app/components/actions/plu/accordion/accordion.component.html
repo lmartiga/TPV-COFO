@@ -1,0 +1,24 @@
+<div [hidden]="showSearchResult" 
+     [hidden]="!pluItem.productList || pluItem.productList.length==0" 
+     *ngFor="let pluItem of pluItems">
+    <md-expansion-panel hideToggle="true" [expanded]="false" #expansionPlu>
+        <md-expansion-panel-header>
+            <md-panel-title>
+                {{ pluItem.description }}
+            </md-panel-title>
+            <md-icon *ngIf="!expansionPlu.expanded" class="material-icons">add</md-icon>
+            <md-icon *ngIf="expansionPlu.expanded" class="material-icons">remove</md-icon>
+        </md-expansion-panel-header>
+        <div [hidden]="!expansionPlu.expanded">
+            <button md-raised-button 
+                *ngFor="let product of pluItem.productList" 
+                (click)="onSelectedProductById(product.productId)" 
+                class="col-lg-2 col-md-3 col-sm-3 col-xs-3 col-xxs-3 plu-item">
+                <div>
+                    <img [hidden]="product.ImageUrl == 'null'" src="{{product.imageHtmlBase64String}}" class="img-max">
+                    <span>{{product.description}}</span>
+                </div>
+            </button>
+        </div>
+    </md-expansion-panel>
+</div>

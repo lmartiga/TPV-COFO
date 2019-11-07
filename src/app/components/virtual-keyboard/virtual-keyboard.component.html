@@ -1,0 +1,173 @@
+
+<!--keyBoard
+<div  class="col-xs-12" >-->
+    <!--Teclado alfabetico-->
+    <div class="alfabetic-keyboard" id="alphabetic-header"  [hidden]="isNumber" class="RectangleAlafanum" >
+      <!--Barra superior
+      <div class="col-xs-12 noP header" id="header">
+          <button md-icon-button class="col-xs-3 key-button close-button" (click)="close()">
+            <md-icon class="material-icons mat-color-warn" >clear</md-icon>
+          </button>
+          <label class="col-xs-4 text"  *ngIf="element.nativeElement.type !== 'password'"  [(ngModel)]="txtLetra" name="txtLetra">{{value}}</label>
+          <button md-icon-button  class="col-xs-3 key-button drag-button">
+            <md-icon class="material-icons">open_with</md-icon>
+          </button>
+      </div>-->
+      <div class="container-fluid col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <!--Primera linea-->
+      <div class="row-fluid col-xs-12 col-sm-12 col-md-12 col-lg-12 noPH header" id="header" (mousedown)="MostrarKeyboard($event)">
+        <div (mousedown)="MostrarKeyboard($event)">
+            <input
+            class="alfabetic-keyboardtext"
+            id="valueKeyboard"
+            type="text"
+            [(ngModel)]="value">
+         </div>
+      </div>
+      <div class="row-fluid col-xs-12 col-sm-12 col-md-12 col-lg-12 noP" (mousedown)="MostrarKeyboard($event)">
+        <div style="margin-left: 1%; margin-right: 0.7%;" *ngFor="let key of alfKeys; let i = index">
+            <button *ngIf="i<=10" class="key-button1 col-xs-1 col-sm-1 col-md-1 col-lg-1" tabindex="-1"
+              [class.key-button-pressed]="isPresed(key)" (click)="addValue(key,true)">{{key}}</button>
+          </div>
+      </div>
+      <!--Segunda linea-->
+      <div class="row-fluid col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-12 noP" (mousedown)="MostrarKeyboard($event)">
+        <div style="margin-left: 4.5%;" *ngFor="let key of alfKeys; let i = index">
+            <button *ngIf="i>10 && i<=20" class="key-button1 col-xs-1 col-sm-1 col-md-1 col-lg-1" tabindex="-1" [class.key-button-pressed]="isPresed(key)" (click)="addValue(key,true)">{{key}}</button>
+          </div>
+      </div>
+      <!--Tercera linea-->
+      <div class="row-fluid col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-12 noP" (mousedown)="MostrarKeyboard($event)">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>  
+        <div *ngFor="let key of alfKeys; let i = index">
+            <button *ngIf="i>20 && i<=30" class="key-button1 col-xs-1 col-sm-1 col-md-1 col-lg-1" tabindex="-1" [class.key-button-pressed]="isPresed(key)" (click)="addValue(key,true)">{{key}}</button>
+          </div>
+      </div>
+      <!--Cuarta linea-->
+      <div class="row-fluid col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-12 noP" (mousedown)="MostrarKeyboard($event)">
+        <div style="margin-left: 4.5%;" *ngFor="let key of alfKeys; let i = index">
+          <button *ngIf="i>30 && i<=41" class="key-button1 col-xs-1 col-sm-1 col-md-1 col-lg-1" tabindex="-1" [class.key-button-pressed]="isPresed(key)" (click)="addValue(key,true)">{{key}}</button>
+        </div>
+      </div>
+      <!--Quinta linea-->
+      <div class="row-fluid col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-12" (mousedown)="MostrarKeyboard($event)">
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">  
+              <div  class="btn-delete" [class.btn-delete-pressed]="isPresed('Backspace')"  (click)="delete()">
+                  <img src="assets/images/ico-calculator-delete-big.png" srcset="assets/images/ico-calculator-delete-big@2x.png 2x, 
+                  assets/images/ico-calculator-delete-big@3x.png 3x" class="ico_calculator_delete_big">
+              </div>
+          </div>          
+          <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+              <button md-raised-button class="btn-close col-xs-3 col-sm-3 col-md-3 col-lg-3" (click)="close()">{{getLiteral('virtual_keyboard_component', 'button_cancel')}}</button>
+          </div>
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+              <button md-raised-button class="button-space col-xs-4 col-sm-4 col-md-4 col-lg-4" [class.button-space-pressed]="isPresed(' ')" (click)="addValue(' ',true)">{{getLiteral('virtual_keyboard_component', 'button_space')}}</button>
+          </div>
+          <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 ">
+            <button md-raised-button class="btn-intro col-xs-3 col-sm-3 col-md-3 col-lg-3" [class.btn-intro-pressed]="isPresed('Enter')" (click)="enterOut()">{{getLiteral('virtual_keyboard_component', 'button_send')}}</button>
+          </div>
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+            <button md-raised-button class="button-mayus col-xs-1 col-sm-1 col-md-1 col-lg-1" [class.button-mayus-pressed]="isPresed('CapsLock')" (click)="mayus()">
+                <img src="assets/images/fill-1.png" srcset="assets/images/fill-1@2x.png 2x, assets/images/fill-1@3x.png 3x" class="Fill-1">
+            </button>
+          </div>
+      </div>
+    </div>
+  </div>
+      <!--<div class="col-xs-12 noP" (mousedown)="MostrarKeyboard($event)">
+          <div *ngFor="let key of alfKeys; let i = index">
+            <button md-raised-button *ngIf="i<=10" class="key-button" tabindex="-1" [class.key-button-pressed]="isPresed(key)" (click)="addValue(key,true)">{{key}}</button>
+          </div>
+        </div>-->
+      <!--Segunda linea-->
+      <!--<div class="col-xs-12 noP" (mousedown)="MostrarKeyboard($event)">
+          <div style="margin-left: 4.5%;" *ngFor="let key of alfKeys; let i = index">
+            <button md-raised-button *ngIf="i>10 && i<=20" class="key-button keyboardtext1 key-button1" tabindex="-1" [class.key-button-pressed]="isPresed(key)" (click)="addValue(key,true)">{{key}}</button>
+          </div>
+      </div>-->
+      <!--Tercera linea-->
+      <!--<div class="col-xs-12 noP" (mousedown)="MostrarKeyboard($event)">
+          <div style="margin-left: 9%;" *ngFor="let key of alfKeys; let i = index">
+            <button md-raised-button *ngIf="i>20 && i<=30" class="key-button keyboardtext1 key-button1" tabindex="-1" [class.key-button-pressed]="isPresed(key)" (click)="addValue(key,true)">{{key}}</button>
+          </div>
+      </div>-->
+      <!--Cuarta linea-->
+      <!--<div class="col-xs-12 noP" (mousedown)="MostrarKeyboard($event)">
+        <div style="margin-left: 4.5%;" *ngFor="let key of alfKeys; let i = index">
+          <button md-raised-button *ngIf="i>30 && i<=41" class="key-button keyboardtext1 key-button1" tabindex="-1" [class.key-button-pressed]="isPresed(key)" (click)="addValue(key,true)">{{key}}</button>
+        </div>
+    </div>-->
+
+      <!--Quinta linea-->
+      <!--<div class="col-xs-12" (mousedown)="MostrarKeyboard($event)">
+          <div class="col-xs-1  ">  
+              <div  class="btn-delete" [class.btn-delete-pressed]="isPresed('Backspace')"  (click)="delete()">
+                  <img src="assets/images/ico-calculator-delete-big.png" srcset="assets/images/ico-calculator-delete-big@2x.png 2x, 
+                  assets/images/ico-calculator-delete-big@3x.png 3x" class="ico_calculator_delete_big">
+              </div>
+          </div>          
+          <div class="col-xs-3 ">
+              <button md-raised-button class="btn-close" (click)="close()">Cancelar</button>
+          </div>
+          <div class="col-xs-4">
+              <button md-raised-button class="button-space" [class.button-space-pressed]="isPresed(' ')" (click)="addValue(' ',true)">Espacio</button>
+          </div>
+          <div class="col-xs-3 ">
+            <button md-raised-button class="btn-intro" [class.btn-intro-pressed]="isPresed('Enter')" (click)="intro()">Enviar</button>
+          </div>
+          <div class="col-xs-1">
+            <button md-raised-button class="button-mayus" [class.button-mayus-pressed]="isPresed('CapsLock')" (click)="mayus()">
+                <img src="assets/images/fill-1.png" srcset="assets/images/fill-1@2x.png 2x, assets/images/fill-1@3x.png 3x" class="Fill-1">
+            </button>
+          </div>
+      </div>
+    </div>-->
+    <!--Teclado Numerico
+    <div class="col-lg-4 col-xs-3 numeric-keyboard noPH">
+        <div class="col-xs-12 noP header">
+          <div *ngFor="let key of numKeys; let i = index">
+            <button md-raised-button class="col-xs-4"  (click)="addValue(key)">{{key}}</button>
+          </div>
+        </div>
+        <div class="col-xs-12 noP button-bottom">
+          <button md-raised-button class="col-xs-6 mat-warn"  (click)="delete()">DEL</button>
+          <button md-raised-button class="col-xs-6 btn-intro"  (click)="intro()">INTRO</button>
+        </div>  
+    </div>
+</div>-->
+
+<!--keyBoard   37 vh -->
+<div class="col-xs-12 RectangleNum" [hidden]="!isNumber" id="numeric-header" (mousedown)="MostrarKeyboard($event)">
+    <!--Teclado Numerico-->
+    <div class="col-xs-12 numeric-keyboard noP">
+        <!--Barra superior-->
+        <div class="col-xs-12 noPV header">
+            <!--<button md-icon-button class="col-xs-3 key-button close-button" (click)="close()">
+              <md-icon class="material-icons mat-color-warn">clear</md-icon>
+            </button>
+            <button md-icon-button class="col-xs-3 key-button drag-button">
+              <md-icon class="material-icons">open_with</md-icon>
+            </button> -->
+            <div style="margin-left: 1% !important; margin-right: 1% !important;">
+                <input
+                class="text"
+                id="valueKeyboard" 
+                type="text"
+                [(ngModel)]="value">
+            </div>
+        </div>
+        <div class="col-xs-12 noPH">
+          <div class="key-{{key}}" *ngFor="let key of numKeys; let i = index">
+            <button *ngIf="key !== ''" md-raised-button class="key-button" tabindex="-1" [class.key-button-pressed]="isPresed(key)"  (click)="addValue(key,true)">{{key}}</button>
+            <button *ngIf="key == ''" md-raised-button class="key-button" [class.key-button-pressed]="isPresed('Backspace')" (click)="delete()">
+                <img src="assets/images/ico-calculator-delete-big.png" srcset="assets/images/ico-calculator-delete-big@2x.png 2x, 
+                assets/images/ico-calculator-delete-big@3x.png 3x" class="first">
+            </button>
+          </div>
+        </div>
+        <div class="col-xs-12 noP">
+          <!--<button md-raised-button class="col-xs-6 mat-warn" (click)="delete()">DEL</button> -->
+          <button [disabled]="formatNumber(value) <= 0" md-raised-button class="col-xs-12 btn-Aceptar"  (click)="enterOut()">{{getLiteral('virtual_keyboard_component', 'button_accept')}}</button>
+        </div>  
+    </div>
+</div>

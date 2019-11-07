@@ -1,0 +1,31 @@
+<div [hidden]="mostrarPreView">
+  <h5 class="auxiliar-action-title">{{getLiteral('document_copyAnulacionParcial_component','partial_cancellation')}}</h5>
+  <div>
+    <tpv-document-search-anulacion-parcial [documentSearchFilters]="documentSearchFilters" (documentSelected)="onDocumentSelected($event)" [fromDate]="defaultDateCopy" [searchMode]="documentSearchMode"></tpv-document-search-anulacion-parcial>
+  </div>
+</div>
+<div *ngIf="mostrarPreView">
+  <div class="col-xs-12">
+        <h5>{{getLiteral('document_copyAnulacionParcial_component','previous_viewToCancel')}}</h5>
+  </div>
+  <div>
+  <tpv-preview-document [ticket]="currentDocument" [actionButtonWrapper]="documentCopyButtonWrapper"></tpv-preview-document>
+  </div>
+  <div class="col-xs-12 button-bottom" #documentCopyButtonWrapper>
+    <button md-raised-button  (click)="onAnulacionCompleta(true)" class="col-xs-4 mat-raised-button mat-primary2" [disabled]="typeActionButton!==3">{{getLiteral('document_copyAnulacionParcial_component','complete_cancellation')}}</button>
+    <button md-raised-button  (click)="onAnularTienda(true)" class="col-xs-4 mat-raised-button mat-primary2" [disabled]="typeActionButton!==1 && typeActionButton !==3">{{getLiteral('document_copyAnulacionParcial_component','cancel_store')}}</button>
+    <button md-raised-button  (click)="onAnularCombustible(true)" class="col-xs-4 mat-raised-button mat-primary2" [disabled]="typeActionButton!==2 && typeActionButton!==3">{{getLiteral('document_copyAnulacionParcial_component','cancel_fuel')}}</button>
+    <button md-raised-button  (click)="resetSearch()" class="col-xs-12  mat-raised-button mat-primary2">{{getLiteral('document_copyAnulacionParcial_component','literal_return')}}</button>
+  </div>
+</div>
+
+<div id="tela-document-copy-anulacion-parcial" *ngIf="anulando" class="tela">
+</div>
+
+<div id="spinner-container" *ngIf="anulando" class="spinner-container" >
+  <ng-container>
+    <div class="col-xs-12 noP spinnerSlidder">
+      <md-progress-spinner mode="indeterminate"></md-progress-spinner>
+    </div>
+  </ng-container>
+</div>

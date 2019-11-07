@@ -1,0 +1,21 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>tpv.angular</id>
+    <version>0.0.1</version>
+    <title>tpv.angular</title>
+    <authors>Everilion</authors>
+    <owners>Everilion</owners>
+    <licenseUrl>http://www.everilion.com</licenseUrl>
+    <projectUrl>http://www.everilion.com</projectUrl>
+    <iconUrl>http://www.recodemk.es/wp-content/uploads/2013/09/everilion.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Unidad angular del TPV</description>
+    <releaseNotes/>    
+    <copyright>Copyright Everilion 2018</copyright>
+    <tags></tags>
+  </metadata>
+  <files>
+    <file src="dist\**\*.*" target="content\dist"/>
+  </files>
+</package>

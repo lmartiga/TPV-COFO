@@ -1,0 +1,15 @@
+<h5 class="auxiliar-action-title">{{titulo}}</h5>
+<h5 class="col-xs-12 noPV">{{subtitulo}}</h5>
+<div class="col-xs-12 txt-big borderH-accent mat-color-warn">
+    <!--<strong *ngIf="documentHasValue(currentDocument)" class="total-amount txt-primary3">{{currentDocument.totalAmountWithTax}}</strong>-->
+    <strong *ngIf="documentHasValue(currentDocument)" class="total-amount txt-primary3">{{_totalCreditCard}}</strong>
+    <strong>{{baseCurrency.symbol}}</strong>
+</div>
+<div class="col-xs-12">
+    <h5 class="txtCenter">{{mainTextComponentLiteral}}</h5>
+    <img src={{imageURL}} class="col-lg-12 img-max noPTop">
+</div>
+<div *ngIf="showButtonFinalizar()" class="button-bottom" >
+    <button md-raised-button class="col-xs-12" [disabled]="isButtonDisabled()" (click)="sendSale()">{{textButton}}</button>
+</div>
+

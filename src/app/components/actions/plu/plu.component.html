@@ -1,0 +1,79 @@
+<!-- PLU SEARCH -->
+<section style="height: 15%" class="tpv-search">
+    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-8 col-xxs-12 noPBottom" style="width:100% !important">
+        <div class="input-group">
+            <span class="input-group-addon rectangle-3-1">
+                <img src="assets/images/ico-search.svg">
+            </span>
+            <!--NOTA: Si hay algún campo oculto dentro de un input-group con addon al principio, colocar siempre entre el addon y el input para que no se elminen los
+            border-radius superior e inferior derecho del input-->
+            <div [hidden]="dataSearch == '' || dataSearch == undefined">
+                <md-icon (click)="resetSearch(true)" class="material-icons cancel input">cancel</md-icon>                
+            </div>
+            <input tpvKeyboard
+                type="text"
+                (enter)="onSelectedProduct()"
+                (keyup.enter)="onSelectedProduct()" 
+                class="form-control buscar-articulo rectangle-3"
+                [(ngModel)]="dataSearch"
+                (ngModelChange)="onSearchChange()"
+                placeholder="{{getLiteral('plu_component', 'placeHolder_PLU_SearchProducts')}}"
+                #inputSearch>
+        </div>
+    </div>
+    <!-- <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 col-xxs-12" style="width:35% !important">
+        <div class="input-group">
+            <span class="input-group-addon">
+                <md-icon class="material-icons">exposure_plus_1</md-icon>
+            </span>
+            <input tpvKeyboard [(ngModel)]="units" type="number" class="form-control txtRight" placeholder="Cantidad" #myInput (click)="myInput.select()" />
+        </div>
+    </div>
+    -->
+</section>
+
+<div class="col-xs-12 noP" style="height: 85%;">
+    <!-- Cuando no hay resultados -->
+    <div [hidden]="pluItems" class="txt-error">
+        {{getLiteral('plu_component', 'error_SearchProducts_NoResults')}}
+    </div>
+
+    <div *ngIf="pluViewConfiguration == 'ACCORDIONS'">
+        <tpv-accordion [showSearchResult]="showSearchResult" [pluItems]="pluItems" (productSelected)="onSelectedProductById($event, true)">
+        </tpv-accordion>
+    </div>
+    <div *ngIf="pluViewConfiguration == 'CATEGORIES'">
+        <tpv-categories [showSearchResult]="showSearchResult" [pluItems]="pluItems" (productSelected)="onSelectedProductById($event, true)">
+        </tpv-categories>
+    </div>
+    <div *ngIf="pluViewConfiguration == 'CATEGORIES_MULTILEVEL'">
+        <tpv-categories-multilevel [showSearchResult]="showSearchResult" [pluItems]="pluItems" (productSelected)="onSelectedProductById($event, true)">
+        </tpv-categories-multilevel>
+    </div>
+    <div *ngIf="pluViewConfiguration == 'CATEGORIES_CUSTOM'" class="col-xs-12" style="height: 100%;">
+        <tpv-categories-custom [showSearchResult]="showSearchResult" [pluItems]="pluItems" (productSelected)="onSelectedProductById($event, true)">
+        </tpv-categories-custom>
+    </div>
+    <!-- PANELS PLU ITEMS SEARCH -->
+    <div [hidden]="!showSearchResult" class="search-plu-list">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{getLiteral('plu_component', 'columnHeader_SearchProducts_Name')}}</th>
+                    <th>{{getLiteral('plu_component', 'columnHeader_SearchProducts_BarCode')}}</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="searchProducts?.length > 0">
+                <tr *ngFor="let product of searchProducts" (click)="onSelectedProductById(product.id, true)" class="search-item">
+                    <td class="col-lg-9 col-md-9 col-sm-9 col-xs-9 col-xxs-9">{{product.description}}</td>
+                    <td class="col-lg-2 col-md-3 col-sm-3 col-xs-3 col-xxs-3"> {{product.barCode}}</td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="!(searchProducts?.length > 0)">
+                <tr>
+                    <td colspan="2" class="txt-error">{{ searchErrorMessage }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

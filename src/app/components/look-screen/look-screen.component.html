@@ -1,0 +1,21 @@
+<div class="session-blok">
+    <div class="childConfirm noP" [style.z-index]="clickStopDispenser ? '1000': '0'">
+        <tpv-confirm-action-static *ngIf="clickStopDispenser" [wantStopPump]="wantStopPump" [externalpopup]="false">
+        </tpv-confirm-action-static>
+    </div>
+    <div class="container noP">
+        <div class="button-emergency">
+            <tpv-options-auxiliar (keydown)="onKeydown($event)">
+            </tpv-options-auxiliar>
+        </div>
+        <div class="childElement">
+            <div class="col-xs-12">
+                <tpv-static-keyboard [textToShow]='msjtexto' [sizeNumbers]='true' [style.display]="!clickStopDispenser ? 'initial' : 'none'">
+                </tpv-static-keyboard>
+            </div>
+            <div class="col-xs-12" style="color: white;margin-top: -20px; bottom: 0; padding-right: 15px; text-align: right; font-size: 16px;">
+                <span style="font-size: 14px">{{getLiteral('tpv_information_sidenav_component','literal_OperatorPanel_Version')}}</span> &nbsp; {{tpvVersion}}
+            </div>
+
+        </div>
+    </div>

@@ -1,0 +1,22 @@
+<div class="col-xs-12 noP">
+    <div class="row" style="width: 100%; margin-right: 0%; margin-left: 0%">
+      <div class="col-xs-12">
+          <form (ngSubmit)="selectCustomer()">
+            <div [hidden]="!dataSearch"><md-icon (click)="limpiarDatos()" class="material-icons cancel input">cancel</md-icon></div>
+            <input tpvKeyboard
+                  [(ngModel)]="dataSearch"
+                  [ngModelOptions]="{standalone: true}"
+                  #customerSearch
+                  class="form-control"
+                  placeholder="Introduce el cliente"
+                  type="text" [autofocus]="true"
+                  (enter)="selectCustomer()">
+          </form>
+      </div>
+      <br/>
+      <!-- Customers resultado -->
+      <div [hidden]="customers.length > 0" class="col-xs-12 txt-error">
+          {{ searchMessage }}
+      </div>
+    </div>
+</div>

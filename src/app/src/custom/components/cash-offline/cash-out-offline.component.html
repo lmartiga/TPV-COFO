@@ -1,0 +1,65 @@
+<h5 class="auxiliar-action-title">{{headerLiteral}}</h5>
+<form #cashOutForm="ngForm" novalidate (ngSubmit)="onSubmit()">
+    <div id="bloqueInicialOffline" class="col-xs-12">
+        <legend class="col-xs-12 tituloimporte legend textoOffline">{{amountLiteral}}</legend>
+        <div class="input-group">  
+            <input tpvKeyboard
+            class="form-control txtRight inputOffline"
+            name="importe"
+            type="text"               
+            id="importe"
+            required
+            [(ngModel)]="cashOutData.importe"
+            #importe="ngModel"
+            min="0" step=".01"
+            (click)="$event.target.select()"
+            (enter)="onAmountKeyEnterPressed()"/>
+            <span class="input-group-addon">{{cashOutData.divisa.symbol}}</span>
+        </div>
+        <div *ngIf="importe.invalid && (importe.dirty || importe.touched)">
+            <div *ngIf="importe.errors.required" class="txt-error">campo requerido</div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <!-- BOTONES DE SELECCIÓN DE MONEDA -->
+        <div *ngFor="let divisa of availableCurrencies; let i = index">
+            <div *ngIf="divisa != undefined">
+                <button md-raised-button color="primary1" type="button" class="col-xs-{{currencyButtonColumnWidthList[i]}} botonOffline" (click)="currencySelected(divisa)"
+                    [ngClass]="{'selected' : divisa.id === cashOutData.divisa.id}">
+                    {{eurLiteral}}
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <legend class="legend textoOffline">{{observationsLiteral}}</legend>
+        <input tpvKeyboard
+            class="form-control taObservaciones inputOffline"
+            name="descripcion"
+            type="string"
+            [(ngModel)]="cashOutData.descripcion"
+            maxlength={{maximumObservationsLength}}
+            (enter)="onObservationsKeyEnterPressed()"/>
+    </div>
+    <div class="col-xs-12">
+        <legend class="legend textoOffline">{{cashRecordReasonsLiteral}}</legend>
+        <!-- BOTONES CON LOS TIPOS DE APUNTE -->
+         <div class="col-xs-12" *ngFor="let cashboxRecordReasonOffline of availableCashboxRecordReasonsOffline; let i = index">
+            <div *ngIf="cashboxRecordReasonOffline != undefined">
+                <button md-raised-button color="primary1" type="button" class="col-xs-{{availableCashboxRecordReasonsButtonColumnWidthList[i]}} botonOffline" (click)="cashboxRecordReasonSelected(cashboxRecordReasonOffline)"
+                    [ngClass]="{'selected' : cashboxRecordReasonOffline.codigo === cashOutData.cashboxRecordReasonOffline.codigo}">
+                    {{cashboxRecordReasonOffline.caption}}
+                </button>
+            </div>
+        </div>  
+        <div  class="col-xs-8"></div>
+    </div>
+    <ng-container *ngIf="isRequestingCashOut()">
+        <div class="col-xs-12 noP spinnerSlidder">
+          <md-progress-spinner mode="indeterminate"></md-progress-spinner>
+        </div>
+    </ng-container>
+    <div class="button-bottom">
+        <button id="botonFinalOffline" md-raised-button class="col-xs-12 btnWhite" type="submit" [disabled]="cashOutForm.invalid && cashOutData.cashboxRecordReasonOffline">{{submitLiteral}}</button>
+    </div>
+</form>

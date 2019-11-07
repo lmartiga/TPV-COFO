@@ -1,0 +1,62 @@
+<div [hidden]="!showForm" >
+  <h5 class="auxiliar-action-title">{{getLiteral('document_cancellation_component', 'header_DocumentCancellation_Reverse')}}</h5>
+  <div class="col-xs-12">
+    <div class="input-group">
+      <span class="input-group-addon">
+        <md-icon class="material-icons">search</md-icon>
+      </span>
+      <input tpvKeyboard class="form-control" [(ngModel)]="txtNumTicket" placeholder="{{getLiteral('document_cancellation_component', 'placeHolder_DocumentCancellation_DocumentNumber')}}" type="text">
+      <div [hidden]="txtNumTicket==''">
+        <md-icon (click)="txtNumTicket=''" class="material-icons cancel input">cancel</md-icon>
+      </div>
+    </div>
+    <div [hidden]="!messageErrorList.Ticket.show " class="txt-error">{{messageErrorList.Ticket.text}}</div>
+  </div>
+  <div class="col-xs-12">
+    <div class="input-group">
+      <span class="input-group-addon">
+        <md-icon class="material-icons">search</md-icon>
+      </span>
+      <input tpvKeyboard class="form-control" [(ngModel)]="ammount" placeholder="{{getLiteral('document_cancellation_component', 'placeHolder_DocumentCancellation_Amount')}}" type="text" id="ammount">
+      <div [hidden]="ammount==undefined">
+        <md-icon (click)="ammount=null" class="material-icons cancel input">cancel</md-icon>
+      </div>
+    </div>
+    <div [hidden]="!messageErrorList.Importe.show " class="txt-error">{{messageErrorList.Importe.text}}</div>
+  </div>
+  <div class="col-xs-12">
+    <div class="input-group">
+      <span class="input-group-addon">
+        <md-icon class="material-icons">search</md-icon>
+      </span>
+      <input [matDatepicker]="datePickerAnular" (click)="datePickerAnular.open()" class="form-control" [(ngModel)]="dateTicket"
+        placeholder="{{getLiteral('document_cancellation_component', 'placeHolder_DocumentCancellation_DocumentDate')}}">
+      <mat-datepicker #datePickerAnular [touchUi]="true"></mat-datepicker>
+      <div [hidden]="dateTicket==undefined">
+        <md-icon (click)="dateTicket=null" class="material-icons cancel input">cancel</md-icon>
+      </div>
+    </div>
+    <div [hidden]="!messageErrorList.Fecha.show " class="txt-error">{{messageErrorList.Fecha.text}}</div>
+  </div>
+  <div *ngIf="showError" class="col-xs-12 txt-error" [ngStyle]="{'white-space':'pre-line'}">
+    {{errorText}}
+  </div>
+  <ng-container *ngIf="isSearchingTicket()">
+    <div class="col-xs-12 noP spinnerSlidder">
+      <md-progress-spinner mode="indeterminate"></md-progress-spinner>
+    </div>
+  </ng-container>
+  <div class="button-bottom">
+    <button md-raised-button class="col-xs-12 mat-raised-button mat-primary2" [disabled]="isSearchingTicket()" (click)="searchTicket()">Buscar</button>
+  </div>
+</div>
+<div *ngIf="!showForm">
+  <div class="col-lg-12">
+    <h5>{{getLiteral('document_cancellation_component', 'header_DocumentCancellation_ShowPreview')}}</h5>
+  </div>
+  <tpv-preview-document [ticket]="currentTicket" [actionButtonWrapper]="cancellationButtonWrapper"></tpv-preview-document>
+  <div class="button-bottom" #cancellationButtonWrapper>
+    <button md-raised-button class="col-xs-12 mat-raised-button mat-primary2" [disabled]="isRequestingCancelOrCancelAndInvoiceDocument()" (click)="cancelDocument()">{{getLiteral('document_cancellation_component', 'bottonButton_DocumentCancellation_Reverse')}}</button>
+    <button md-raised-button class="col-xs-12 mat-raised-button mat-primary2" [disabled]="isRequestingCancelOrCancelAndInvoiceDocument()" (click)="resetSearch()">{{getLiteral('document_cancellation_component', 'bottonButton_DocumentCancellation_Return')}}</button>
+  </div>
+</div>

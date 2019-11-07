@@ -1,0 +1,14 @@
+<button *ngIf="fuellingPointInfo;else emptyPump" md-raised-button class="pump-item-aux" [ngClass]="setClassButton()" (click)="btnFuellingPointClick($event)">
+  <div class="pump-number pump-transfer">
+    <span>{{fuellingPointInfo.positionNumber | number:'2.0-1'}}</span>
+  </div>
+  <div class="pump-data">
+    <ng-container *ngIf="fuellingProductData">
+      <div class="pump-cost" [ngClass]="{visibleHidden:fuellingProductData.unitaryPrice == undefined}">{{fuellingProductData.unitaryPrice|number:formatConfig.unitPricePipeFormat}}{{formatConfig.unitPriceSymbol}}</div>
+      <img [src]="srcGrade()" class="pump-img pump-img-transfer" [ngClass]="{visibleHidden:fuellingProductData.gradeId == undefined}">
+    </ng-container>
+  </div>
+</button>
+<ng-template #emptyPump>
+    <button class="mat-raised-button pump-item-aux mat-empty" disabled></button>
+</ng-template>

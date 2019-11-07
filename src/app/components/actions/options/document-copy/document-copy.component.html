@@ -1,0 +1,16 @@
+<div [hidden]="mostrarPreView">
+  <h5 class="auxiliar-action-title">{{getLiteral('document_copy_component', 'header_Documentcopy')}}</h5>
+  <div>
+    <tpv-document-search [documentSearchFilters]="documentSearchFilters" (documentSelected)="onDocumentSelected($event)" [fromDate]="defaultDateCopy" [searchMode]="documentSearchMode"></tpv-document-search>
+  </div>
+</div>
+<div *ngIf="mostrarPreView">
+  <div class="col-xs-12">
+        <h5>{{getLiteral('document_copy_component', 'header_Documentcopy_preview')}}</h5>
+  </div>
+  <tpv-preview-document [ticket]="currentDocument" [actionButtonWrapper]="documentCopyButtonWrapper"></tpv-preview-document>
+  <div class="col-xs-12 button-bottom" #documentCopyButtonWrapper>
+    <button md-raised-button (click)="onCopySelected(false)" class="col-xs-6 mat-raised-button mat-primary2">{{getLiteral('document_copy_component', 'button_return')}}</button>
+    <button md-raised-button (click)="onCopySelected(true)" class="col-xs-6 mat-raised-button mat-primary2">{{getLiteral('document_copy_component', 'button_print')}}</button>
+  </div>
+</div>

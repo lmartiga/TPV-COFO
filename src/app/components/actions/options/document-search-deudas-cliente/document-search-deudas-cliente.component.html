@@ -1,0 +1,166 @@
+  <div class="col-xs-12">
+    <form #documentSearchForm="ngForm">
+      <mat-accordion class="cuadroBusquedaTicket">
+        <!-- FILTROS -->
+        <mat-expansion-panel class="cuadroBusquedaTicket" [expanded]="filterPanelOpened" (opened)="filterPanelOpened = true" (closed)="filterPanelOpened = false"
+          hideToggle="true">
+          <mat-expansion-panel-header>
+            <md-panel-title>
+              {{getLiteral('document_search_component', 'header_DocumentFilter')}}
+            </md-panel-title>
+            <md-icon *ngIf="!filterPanelOpened" class="material-icons">add</md-icon>
+            <md-icon *ngIf="filterPanelOpened" class="material-icons">remove</md-icon>
+          </mat-expansion-panel-header>
+
+          <div *ngFor="let filter of documentSearchFilters">
+            <div [ngSwitch]="filter">
+              <div *ngSwitchCase="documentSearchFiltersEnum.document" class="col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <md-icon class="material-icons">search</md-icon>
+                  </span>
+                  <input tpvKeyboard class="form-control" (keyup.enter)="searchDocuments()" [(ngModel)]="document" name="document" placeholder="{{getLiteral('document_search_component', 'placeHolder_DocumentFilter_DocumentNumber')}}"
+                    type="text">
+                  <div [hidden]="document?.length<3">
+                    <md-icon (click)="document=''" class="material-icons cancel input">cancel</md-icon>
+                  </div>
+                </div>
+              </div>
+              <div *ngSwitchCase="documentSearchFiltersEnum.customer" class="col-xs-12">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <md-icon class="material-icons">search</md-icon>
+                  </span>
+                  <input tpvKeyboard class="form-control" (click)="getCustomer()" [(ngModel)]="customerBusinessName" name="customerBusinessName"
+                    placeholder="{{getLiteral('document_search_component', 'placeHolder_DocumentFilter_SelectCustomer')}}" type="text">
+                  <div [hidden]="customerBusinessName?.length<3">
+                    <md-icon (click)="clearCustomer()" class="material-icons cancel input">cancel</md-icon>
+                  </div>
+                </div>
+              </div>
+              <div *ngSwitchCase="documentSearchFiltersEnum.plate" class="m-top10">
+                <div class="col-xs-12">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <md-icon class="material-icons">search</md-icon>
+                    </span>
+                    <input tpvKeyboard class="form-control" (keyup.enter)="searchDocuments()" [(ngModel)]="plate" name="plate" placeholder="{{getLiteral('document_search_component', 'placeHolder_DocumentFilter_Plate')}}"
+                      type="text">
+                    <div [hidden]="plate?.length<3">
+                      <md-icon (click)="plate=''" class="material-icons cancel input">cancel</md-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngSwitchCase="documentSearchFiltersEnum.date" class="m-top10">
+                <div class="col-xs-6">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <md-icon class="material-icons">search</md-icon>
+                    </span>
+                    <input [matDatepicker]="buscarTicketDateDesdePicker" (click)="buscarTicketDateDesdePicker.open()" class="form-control"
+                      [(ngModel)]="fromEmissionDate" name="fromDate" placeholder="{{getLiteral('document_search_component', 'placeHolder_DocumentFilter_FromDate')}}">
+                    <mat-datepicker #buscarTicketDateDesdePicker [touchUi]="true"></mat-datepicker>
+                    <div [hidden]="fromEmissionDate?.length<3">
+                      <md-icon (click)="fromEmissionDate=null" class="material-icons cancel input">cancel</md-icon>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-6">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <md-icon class="material-icons">search</md-icon>
+                    </span>
+                    <input [matDatepicker]="buscarTicketDateHastaPicker" (click)="buscarTicketDateHastaPicker.open()" class="form-control"
+                      [(ngModel)]="toEmissionDate" name="toDate" placeholder="{{getLiteral('document_search_component', 'placeHolder_DocumentFilter_ToDate')}}">
+                    <mat-datepicker #buscarTicketDateHastaPicker [touchUi]="true"></mat-datepicker>
+                    <div [hidden]="toEmissionDate?.length<3">
+                      <md-icon (click)="toEmissionDate=null" class="material-icons cancel input">cancel</md-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngSwitchCase="documentSearchFiltersEnum.import" class="m-top10">
+                <div class="col-xs-6">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <md-icon class="material-icons">search</md-icon>
+                    </span>
+                    <input tpvKeyboard class="form-control" (keyup.enter)="searchDocuments()" [(ngModel)]="fromImport" name="fromImport" placeholder="{{getLiteral('document_search_component', 'placeHolder_DocumentFilter_FromAmount')}}"
+                      type="text" id="fromImport" (click)="$event.target.select()">
+                    <div [hidden]="fromImport?.length<3">
+                      <md-icon (click)="fromImport=null" class="material-icons cancel input">cancel</md-icon>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-6">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <md-icon class="material-icons">search</md-icon>
+                    </span>
+                    <input tpvKeyboard class="form-control" (keyup.enter)="searchDocuments()" [(ngModel)]="toImport" name="toImport" placeholder="{{getLiteral('document_search_component', 'placeHolder_DocumentFilter_ToAmount')}}"
+                      type="text" (click)="$event.target.select()" id="toImport">
+                    <div [hidden]="toImport?.length<3">
+                      <md-icon (click)="toImport=null" class="material-icons cancel input">cancel</md-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <p [hidden]="!showValidationError" class="txt-error" >
+              {{validationTextError}}
+            </p>
+          </div>
+          <div class="col-xs-12 noP">
+            <button class="col-xs-6 col-xxs-12 mat-raised-button mat-primary2"  md-raised-button (click)="searchDocuments()">{{getLiteral('document_search_component', 'button_DocumentFilter_OK')}}</button>
+            <button class="col-xs-6 col-xxs-12 mat-raised-button mat-primary2"  md-raised-button (click)="clearAll()">{{getLiteral('document_search_component', 'button_DocumentFilter_Clear')}}</button>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <div [hidden]="textFilters.length < 5" class="filterText col-xs-12">{{getLiteral('document_search_component', 'literal_DocumentFilter_Filter')}} <i>{{textFilters}}</i></div>
+    </form>
+    <!-- TABLA DOCUMENTOS RESULTADOS -->
+    <ng-container *ngIf="isSearching; else resultsTemplate">
+      <div class="col-xs-12 noP spinnerSlidder">
+        <md-progress-spinner mode="indeterminate"></md-progress-spinner>
+      </div>
+    </ng-container>
+    <ng-template #resultsTemplate>
+      <div *ngIf="documentList?.length > 0">
+        <table class="table">
+          <thead class="theadGrey">
+            <tr>
+              <th></th>
+              <th class="txtLeft">{{getLiteral('document_search_component', 'columnHeader_DocumentFilter_Date')}}</th>
+              <th class="txtLeft">{{getLiteral('document_search_component', 'columnHeader_DocumentFilter_DocumentNumber')}}</th>
+              <th class="txtLeft">{{getLiteral('document_search_component', 'columnHeader_DocumentFilter_Customer')}}</th>
+              <th class=" txtRight">{{getLiteral('document_search_component', 'columnHeader_DocumentFilter_Amount')}}</th>
+              <th *ngIf="showDebt" class="txtRight">{{getLiteral('document_search_component', 'columnHeader_DocumentFilter_Debt')}}</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let document of documentList; let i = index;">
+            <tr>
+              <td><input (click)="checkedPush(document.documentNumber)" [ngClass]="{'selected': selectedDocumentIndex===i}"  type="checkbox" checked="select" style="transform: scale(2)"></td>
+              <td class="txtLeftDate">{{ document.emissionLocalDateTime?.toLocaleString() }}</td>
+              <td class="txtLeft">{{ document.documentNumber }}</td>
+              <td class="txtLeft">{{ document.customerBusinessName }}</td>
+              <td class="txtRight nowrap" >{{ document.totalAmountWithTax }} {{currencyInfo?.symbol}}</td>
+              <td *ngIf="showDebt" class="txtRightBold nowrap" >{{ document.pendingAmountWithTax }} {{currencyInfo?.symbol}}</td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>     
+      <div *ngIf="documentList?.length == 0" class="col-xs-12 txt-error">
+        {{ searchMessage }}
+      </div>
+    </ng-template>
+  </div>
+  <div *ngIf="documentList?.length != 0" class="button-bottom" style="position: relative;margin-bottom: 1px;">
+      <button class="col-xs-12 mat-raised-button mat-primary2" md-raised-button (click)="selectDocuments()">{{getLiteral('document_search_component','Pay_Debt')}}</button>
+  </div>
+
+  <div id="tela-document-search-anulacion-parcial" *ngIf="isSearching" class="tela">
+  </div>

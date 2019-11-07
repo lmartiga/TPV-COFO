@@ -1,0 +1,91 @@
+<div class="status-progress-bar"></div>
+<div class="status-leftdata1 noPLeft noPV" (click)="openIformationSidenav()" #tooltip="mdTooltip" [md-tooltip]="syncrConnectionMessage?.ayuda" [tooltip-position]="position">
+    <!-- <button class="status-logo mat-transparent-button"  md-icon-button>
+        <img src="assets/images/img_logo.png" alt="superpuntos logo">
+    </button> -->
+</div>
+<div class="status-leftdata">
+    <img src="assets/images/btn-cerrar-sesion.png" #tooltip="mdTooltip" [md-tooltip]="syncrConnectionMessage?.bloqueo" [tooltip-position]="position" class="btn_cerrar_sesion" (click)="openIformationSidenav1()">
+    <img src="assets/images/ico-cerrar-sesion.png" #tooltip="mdTooltip" [md-tooltip]="syncrConnectionMessage?.bloqueo" [tooltip-position]="position" class="ico_cerrar_sesion" (click)="openIformationSidenav1()">
+    <label class="nombre-bar1">{{getLiteral('status_bar_component','hello_text')}}</label>
+    <label class="nombre-bar">{{operator}}</label>
+
+</div>
+<div class="status-message noPV">
+    <div class="status-markee status-message-ellipse" title="{{message | uppercase}}">{{( message==undefined || message.length==0 )?  "&nbsp;" : (message | uppercase)}}</div>
+    <!--NOTA: Por temas de espacio sería genial si en resoluciones pequeñas pudiéramos habilitar el status markee como un "snack" de material design-->
+</div>
+<!--BOTON SYNC -->
+<div class="status-rightdata noPV txtRight">
+    <button md-icon-button>
+        <md-icon *ngIf="tpvNetWorkConnectionStatus == connectionStatus.connected" [md-tooltip]="syncrConnectionMessage?.ok"
+            [tooltip-position]="position" #tooltip="mdTooltip" (click)="syncronizarDatos()" class="material-icons mat-color-ok">sync</md-icon>
+        <md-icon *ngIf="tpvNetWorkConnectionStatus == connectionStatus.disconnected" [md-tooltip]="syncrConnectionMessage?.error"
+            [tooltip-position]="position" #tooltip="mdTooltip" class="material-icons mat-color-warn">sync_disabled</md-icon>
+        <md-icon *ngIf="tpvNetWorkConnectionStatus == connectionStatus.unknown" [md-tooltip]="syncrConnectionMessage?.unknown"
+            [tooltip-position]="position" #tooltip="mdTooltip" class="material-icons mat-color-accent">sync_disabled</md-icon>
+    </button>
+
+    <!--BOTON TME -->
+    <button md-icon-button>
+        <md-icon *ngIf="tmeConnectionStatus == connectionStatus.connected" [md-tooltip]="tmeConnectionMessage?.ok"
+            [tooltip-position]="position" #tooltip="mdTooltip" (click)="syncTMEDatos()" class="material-icons mat-color-ok">desktop_windows</md-icon>
+        <md-icon *ngIf="tmeConnectionStatus == connectionStatus.disconnected" [md-tooltip]="tmeConnectionMessage?.error"
+            [tooltip-position]="position" #tooltip="mdTooltip" (click)="syncTMEDatos()" class="material-icons mat-color-warn">desktop_windows</md-icon>
+        <md-icon *ngIf="tmeConnectionStatus == connectionStatus.unknown" [md-tooltip]="tmeConnectionMessage?.unknown"
+            [tooltip-position]="position" #tooltip="mdTooltip" (click)="syncTMEDatos()" class="material-icons mat-color-accent">desktop_windows</md-icon>
+    </button>
+
+    <!--NOTA: Implementar tooltips para los iconos-->
+    <button md-icon-button>
+        <md-icon *ngIf="domsConnectionStatus == connectionStatus.connected" [md-tooltip]="domsConnectionMessage?.ok"
+            [tooltip-position]="position" #tooltip="mdTooltip" (click)="syncPSSDoms()" class="material-icons mat-color-ok">local_gas_station</md-icon>
+        <md-icon *ngIf="domsConnectionStatus == connectionStatus.disconnected" [md-tooltip]="domsConnectionMessage?.error"
+            [tooltip-position]="position" #tooltip="mdTooltip" (click)="syncPSSDoms()" class="material-icons mat-color-warn">local_gas_station</md-icon>
+        <md-icon *ngIf="domsConnectionStatus == connectionStatus.unknown" [md-tooltip]="domsConnectionMessage?.unknown"
+            [tooltip-position]="position" #tooltip="mdTooltip" (click)="syncPSSDoms()" class="material-icons mat-color-accent">local_gas_station</md-icon>
+    </button>
+    <!--NOTA: Se oculta el icono de replica
+    <button md-icon-button>
+        <md-icon *ngIf="dataBaseConnectionStatus == connectionStatus.connected" [md-tooltip]="dataBaseConnectionMessage?.ok" [tooltip-position]="position"
+            #tooltip="mdTooltip" (click)="tooltip.toggle()" class="material-icons mat-color-ok">storage</md-icon>
+        <md-icon *ngIf="dataBaseConnectionStatus == connectionStatus.disconnected" [md-tooltip]="dataBaseConnectionMessage?.error"
+            [tooltip-position]="position" #tooltip="mdTooltip" (click)="tooltip.toggle()" class="material-icons mat-color-warn">storage</md-icon>
+        <md-icon *ngIf="dataBaseConnectionStatus == connectionStatus.unknown" [md-tooltip]="dataBaseConnectionMessage?.unknown" [tooltip-position]="position"
+            #tooltip="mdTooltip" (click)="tooltip.toggle()" class="material-icons mat-color-accent">storage</md-icon>
+    </button>
+    -->
+    <button md-icon-button>
+        <md-icon *ngIf="tpvServiceConnectionStatus == connectionStatus.connected" [md-tooltip]="serviceConnectionMessage?.ok"
+            [tooltip-position]="position" #tooltip="mdTooltip" (click)="tooltip.toggle()" class="material-icons mat-color-ok">settings</md-icon>
+        <md-icon *ngIf="tpvServiceConnectionStatus == connectionStatus.disconnected" [md-tooltip]="serviceConnectionMessage?.error"
+            [tooltip-position]="position" #tooltip="mdTooltip" (click)="tooltip.toggle()" class="material-icons mat-color-warn">settings</md-icon>
+        <md-icon *ngIf="tpvServiceConnectionStatus == connectionStatus.unknown" [md-tooltip]="serviceConnectionMessage?.unknown"
+            [tooltip-position]="position" #tooltip="mdTooltip" (click)="tooltip.toggle()" class="material-icons mat-color-accent">settings</md-icon>
+    </button>
+
+    <!-- <button md-icon-button>
+        <md-icon *ngIf="tpvNetWorkConnectionStatus == connectionStatus.connected" [md-tooltip]="networkConnectionMessage?.ok"
+            [tooltip-position]="position" #tooltip="mdTooltip" (click)="tooltip.toggle()" class="material-icons mat-color-ok">router</md-icon>
+        <md-icon *ngIf="tpvNetWorkConnectionStatus == connectionStatus.disconnected" [md-tooltip]="networkConnectionMessage?.error"
+            [tooltip-position]="position" #tooltip="mdTooltip" (click)="tooltip.toggle()" class="material-icons mat-color-warn">router</md-icon>
+        <md-icon *ngIf="tpvNetWorkConnectionStatus == connectionStatus.unknown" [md-tooltip]="networkConnectionMessage?.unknown"
+            [tooltip-position]="position" #tooltip="mdTooltip" (click)="tooltip.toggle()" class="material-icons mat-color-accent">router</md-icon>
+    </button>     -->
+
+    <button md-icon-button>
+        <md-icon *ngIf="((multiTpvNetWorkConnectionStatus == connectionStatus.connected) || (multiTpvNetWorkConnectionStatus == connectionStatus.reconnected))" [md-tooltip]="multiTpvNetworkConnectionMessage?.ok"
+            [tooltip-position]="position" #tooltip="mdTooltip" (click)="tooltip.toggle()" class="material-icons mat-color-ok">{{ (isServerMultipleTPV) ?  'dns':'device_hub' }}</md-icon>
+        <md-icon *ngIf="(multiTpvNetWorkConnectionStatus == connectionStatus.disconnected)" [md-tooltip]="multiTpvNetworkConnectionMessage?.error"
+            [tooltip-position]="position" #tooltip="mdTooltip" (click)="tooltip.toggle()" class="material-icons mat-color-warn">{{ (isServerMultipleTPV) ?  'dns':'device_hub' }}</md-icon>
+        <md-icon *ngIf="(multiTpvNetWorkConnectionStatus == connectionStatus.unknown)" [md-tooltip]="multiTpvNetworkConnectionMessage?.unknown"
+            [tooltip-position]="position" #tooltip="mdTooltip" (click)="tooltip.toggle()" class="material-icons mat-color-accent">{{ (isServerMultipleTPV) ?  'dns':'device_hub' }}</md-icon>
+    </button>
+
+</div>
+<div>
+    <span class="status-date">
+        <span>{{date | date: 'HH:mm'}}h</span>
+    <span>{{date | date: 'dd/MM/yy'}}</span>
+    </span>
+</div>

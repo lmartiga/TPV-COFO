@@ -1,0 +1,29 @@
+.fpacFixedHeight{
+    height: 80px;
+}
+.fpacFixedHeight > div,.fpacFixedHeight > div>input,.fpacFixedHeight > div>button {
+    height: 100%;
+}
+.textTransfSalePrepay{
+    font-size: 25px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.supplyTransactions {
+    padding-top: 2%
+}
+.pMinimal {
+    padding: 2px;
+}
+.waitingOperationpump{
+    height: 120px;
+    width: 20%;
+    border-radius: 4px;
+    font-size: 1.4em;
+    min-height: initial;
+    box-shadow: 0 0 0 0;
+    border: 0;
+    margin-right: 1.5%;
+}

@@ -1,0 +1,225 @@
+/* Scss Document */
+/*Tema personalizado a partir de Material Design*/
+/*Color palettes from the Material Design spec.
+See https://www.google.com/design/spec/style/color.html
+*/
+$mat-primary: (
+50 : #ffffff,
+100 : #ffffff,
+200 : #ffffff,
+300 : #ffffff,
+400 : #ffffff,
+500 : #ffffff,
+600 : #ffffff,
+700 : #ffffff,
+800 : #ffffff,
+900 : #ffffff,
+A100 : #ffffff,
+A200 : #ffffff,
+A400 : #ffffff,
+A700 : #ffffff,
+contrast: (
+50 : #000000,
+100 : #000000,
+200 : #000000,
+300 : #000000,
+400 : #000000,
+500 : #000000,
+600 : #000000,
+700 : #000000,
+800 : #000000,
+900 : #000000,
+A100 : #000000,
+A200 : #000000,
+A400 : #000000,
+A700 : #000000,
+)
+);
+$mat-warn: (
+50 : #f9e0e7,
+100 : #f0b3c2,
+200 : #e68099,
+300 : #db4d70,
+400 : #d42652,
+500 : #cc0033,
+600 : #c7002e,
+700 : #c00027,
+800 : #b90020,
+900 : #ad0014,
+A100 : #ffd7d9,
+A200 : #ffa4aa,
+A400 : #ff717a,
+A700 : #ff5862,
+contrast: (
+50: $black-87-opacity,
+100: $black-87-opacity,
+200: $black-87-opacity,
+300: $black-87-opacity,
+400: $black-87-opacity,
+500: white,
+600: white,
+700: white,
+800: $white-87-opacity,
+900: $white-87-opacity,
+A100: $black-87-opacity,
+A200: white,
+A400: white,
+A700: white,
+)
+);
+$mat-accent: (
+50 : #ebf4f5,
+100 : #cce0e3,
+200 : #8ccad2,
+300 : #5eb4bf,
+400 : #3ca4b2,
+500 : #1994a4,
+600 : #168c9c,
+700 : #128192,
+800 : #0e7789,
+900 : #086578,
+1000: #003B5C,
+A100 : #a7eeff,
+A200 : #74e4ff,
+A400 : #41daff,
+A700 : #28d5ff,
+contrast: (
+50: $black-87-opacity,
+100: $black-87-opacity,
+200: $black-87-opacity,
+300: $black-87-opacity,
+400: $black-87-opacity,
+500: white,
+600: white,
+700: white,
+800: $white-87-opacity,
+900: $white-87-opacity,
+A100: $black-87-opacity,
+A200: white,
+A400: white,
+A700: white,
+)
+);
+$mat-accent2: (
+10 : #E3E3E3,
+20 : #F5F3F2,
+25 : #cbc4bc,
+30 : #9A928C,
+40 : #6E6259,
+50 : #fcece5,
+60 : #EAE7E4,
+70 : #6D6259,
+100 : #f7cfbd,
+200 : #f1af92,
+300 : #eb8e66,
+400 : #e77645,
+500 : #e35e24,
+600 : #e05620,
+700 : #dc4c1b,
+800 : #d84216,
+900 : #d0310d,
+1000: #FF8200,
+1100: #FAAC16,
+A100 : #fffdfc,
+A200 : #ffd1c9,
+A400 : #ffa696,
+A700 : #ff907d,
+contrast: (
+50: $black-87-opacity,
+100: $black-87-opacity,
+200: $black-87-opacity,
+300: $black-87-opacity,
+400: $black-87-opacity,
+500: white,
+600: white,
+700: white,
+800: $white-87-opacity,
+900: $white-87-opacity,
+A100: $black-87-opacity,
+A200: white,
+A400: white,
+A700: white,
+)
+);
+$mat-success: (
+50 : #f3f5e1,
+100 : #e1e7b4,
+200 : #cdd782,
+300 : #b8c64f,
+400 : #a9ba2a,
+500 : #9aae04,
+600 : #92a703,
+700 : #889d03,
+800 : #7e9402,
+900 : #6c8401,
+A100 : #eeffb1,
+A200 : #e4ff7e,
+A400 : #d9ff4b,
+A700 : #d3ff31,
+contrast: (
+50: $black-87-opacity,
+100: $black-87-opacity,
+200: $black-87-opacity,
+300: $black-87-opacity,
+400: $black-87-opacity,
+500: white,
+600: white,
+700: white,
+800: $white-87-opacity,
+900: $white-87-opacity,
+A100: $black-87-opacity,
+A200: white,
+A400: white,
+A700: white,
+)
+);
+/*CUSTOM VARIABLES*/
+$white-100-opacity:#ffffff;
+$black-100-opacity:#000000;
+$black-90-opacity: rgba(black, 0.90);
+$white-87-opacity: rgba(white, 0.87);
+$white-50-opacity: rgba(white, 0.50);
+$black-50-opacity: rgba(black, 0.50);
+$black-12-opacity: rgba(black, 0.12);
+$white-12-opacity: rgba(white, 0.12);
+$black-6-opacity: rgba(black, 0.06);
+$white-6-opacity: rgba(white, 0.06);
+$mat-type-primary:#222222;
+$mat-type-accent:#ffffff;
+$mat-type-warn:mat-color($mat-warn, 900);
+$mat-border:#cccccc;
+$mat-night:#35294a;
+$mat-day:#31adeb;
+/*NOTA 010218 Estos son los cuatro únicos tonos para los surtidores*/
+$mat-prepay:#e40028;
+$mat-atend:#be2e8e;
+$mat-reserved:#0d859b;
+$mat-preauthorized:#236ccc;
+$mat-reserved:$mat-preauthorized;
+$mat-free:#6a972c;
+$mat-error: #e40028;//#CC8500;
+$mat-offline:#a39a94;
+$mat-mix:#024c7a;
+/*FIN NOTA 010218*/
+$mat-authorized:#ff8200;
+$mat-back:#333333;
+$mat-nopay:#80113d;
+$mat-transfer:#ff8200;
+$mat-stop:#e40028;
+$mat-unconfig:#999999;
+$mat-bck:#f2f2f2;
+$mat-default:#ff8200;
+$mat-normal:#aca39a;
+$mat-abrir:#ff8200;
+$mat-auxiliar:mat-color($mat-accent, 900);
+$mat-tr-even:mat-color($mat-accent2, 50);
+$mat-footer:#231f20;
+$mat-footerWhite:#ffffff;
+$mat-icon-input:#aaaaaa;
+$mat-border-accent:mat-color($mat-accent2, 500);
+$mat-border-accordion:mat-color($mat-accent, 300);
+$mat-tab:mat-color($mat-primary, 500);
+$mat-reserved:$mat-prepay;
+$mat-unknown:#3fcc9c;
+$mat-numeric-keyboard: #003b5c;//rgba(35, 31, 32,.95);
+$mat-alfabetic-keyboard: rgba(0, 59, 92,1);//$black-90-opacity;

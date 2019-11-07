@@ -1,0 +1,9 @@
+diff a/src/app/components/document/document.component.html b/src/app/components/document/document.component.html	(rejected hunks)
+@@ -136,6 +136,7 @@
+             <span class="glyphicon glyphicon-chevron-down"></span>
+         </button>
+     </div>
++    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxs-4 ammount txtRight posicionamiento" >
+         <h4>
+             {{ documents[selectedDocumentIndex].totalAmountWithTax |number:formatConfig.moneyPipeFormat }}
+             <ng-container *ngIf="baseCurrency">{{baseCurrency.symbol}}</ng-container>

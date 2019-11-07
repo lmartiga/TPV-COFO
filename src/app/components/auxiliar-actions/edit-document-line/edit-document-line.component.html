@@ -1,0 +1,159 @@
+<div class="mat-tab-body-content" style="height: 100%;background-color: #EAE7E4;">
+<br>
+<div style="text-align: center;height: 3%;">
+	<label class="titulo1">{{getLiteral('edit_document_line_component', 'header_EditDocumentLine_Ticket')}} {{lineToEdit.ticket}}</label>
+	<span class="titulo">{{getLiteral('edit_document_line_component', 'header_EditDocumentLine_EditProd')}} </span>
+</div>
+<form style="height: 42%;" id="editLineForm" #editLineForm="ngForm" (ngSubmit)="sendLine()">
+	<div class="col-xs-12 inputSpan">
+				<input 		 			
+					class="form-control txtRight estilo-quantity" style="height: 60px; padding-right: 23%; font-size: 30px;"
+					[(ngModel)]="lineToEdit.quantity"
+
+					name="quantity"
+					#quantity="ngModel"
+					#quantityElemRef
+					autocomplete="off"
+					(enter)="sendLine()"					
+					(click)="$event.target.select()"
+					(click)="ObtenerValor(quantityElemRef)">
+					<span class="inicio">{{getLiteral('edit_document_line_component', 'span_EditDocumentLine_Quantity')}}</span>
+					<span class="fin">{{getLiteral('edit_document_line_component', 'span_EditDocumentLine_Unity')}}</span>
+				<div *ngIf="quantity.invalid && (quantity.dirty || quantity.touched)">
+					<div *ngIf="quantity.errors?.required" class="txt-error">{{textFieldValidationErrorMessage}}</div>
+				</div>
+				<div *ngIf="lineToEdit.quantity <= 0" class="txt-error">{{textFieldValidationNumericMessage}}</div>
+	</div>
+	<div class="col-xs-12 inputSpan">
+			<input				
+				class="form-control txtRight estilo-pricewithtx" style="height: 60px; padding-right: 20%; font-size: 30px;"
+				[(ngModel)]="lineToEdit.priceWithTax"
+				id="price" 
+				name="priceWithTax"			
+				#priceWithTax="ngModel"
+				#priceWithTaxElemRef
+				autocomplete="off"
+				[disabled]="_lineToEdit.modifPvp == false || _lineToEdit.isPromoted == true ||  _lineToEdit.PVPLocal == true ? true : false"
+				(enter)="sendLine()"
+				(click)="$event.target.select()"
+				(click)="ObtenerValor(priceWithTaxElemRef)">
+				<span class="inicio">{{getLiteral('edit_document_line_component', 'span_EditDocumentLine_Price')}}</span>
+				<span class="fin">{{getLiteral('edit_document_line_component', 'span_EditDocumentLine_Uni')}}</span>
+
+			<div *ngIf="priceWithTax.invalid && (priceWithTax.dirty || priceWithTax.touched)">
+				<div *ngIf="priceWithTax.errors?.required" class="txt-error">{{textFieldValidationErrorMessage}}</div>
+			</div>
+			<div class="txt-error">
+				{{ notAllowedMessage }}
+			</div>
+	</div>
+	<div class="col-xs-12 inputSpan">
+				<input
+					
+					class="form-control txtRight estilo-discountPercentage" style="height: 60px; padding-right: 12%; font-size: 30px;"
+					[(ngModel)]="lineToEdit.discountPercentage"
+					name="discountPercentage"					
+					pattern="^(\d{0,2}(\.\d{1,2})?|100(\.00?)?)$"
+					#discountPercentage="ngModel"
+					#discountPercentageElemRef
+					autocomplete="off"
+					[disabled]="_lineToEdit.isPromoted == true ||  _lineToEdit.PVPLocal == true ? true : false"
+					(enter)="sendLine()"
+					(click)="$event.target.select()"
+					(click)="ObtenerValor(discountPercentageElemRef)">
+					<span class="inicio">{{getLiteral('edit_document_line_component', 'span_EditDocumentLine_Discount')}}</span>
+					<span class="fin">{{getLiteral('edit_document_line_component', 'span_EditDocumentLine_Percentage')}}</span>
+
+					<div *ngIf="discountPercentage.invalid && (discountPercentage.dirty || discountPercentage.touched)">
+						<div *ngIf="discountPercentage.errors?.required" class="txt-error">{{textFieldValidationErrorMessage}}</div>
+					</div>
+					<div *ngIf="discountPercentage.errors?.pattern">
+						<div class="txt-error">{{discountPercentageValidationErrorMessage}}</div>
+					</div>
+				<div class="txt-error">
+					{{ notAllowedMessage }}
+				</div>
+	</div>
+	<!-- <md-tab-group [@.disabled]="true" dynamicHeight="false" (selectChange)="changeInpputFocus()" [(selectedIndex)]="selectedTab">
+		<md-tab label="{{ textQuantity | uppercase }}">
+			<div class="col-xs-12">
+				<input
+					tpvKeyboard
+					class="form-control txtRight"
+					[(ngModel)]="lineToEdit.quantity"
+					name="quantity"
+					type="number" required
+					#quantity="ngModel"
+					#quantityElemRef
+					placeholder="{{textQuantity}}"
+					autocomplete="off"
+					(enter)="sendLine()"
+					(click)="quantityElemRef.select()">
+				<div *ngIf="quantity.invalid && (quantity.dirty || quantity.touched)">
+					<div *ngIf="quantity.errors?.required" class="txt-error">{{textFieldValidationErrorMessage}}</div>
+				</div>
+				<div *ngIf="lineToEdit.quantity <= 0" class="txt-error">{{textFieldValidationNumericMessage}}</div>
+			</div>
+		</md-tab>
+		<md-tab label="{{ textAmount | uppercase }}">
+			<div class="col-xs-12">
+				<input
+					tpvKeyboard
+					class="form-control txtRight"
+					[(ngModel)]="lineToEdit.priceWithTax"
+					name="priceWithTax"
+					type="number"
+					required
+					#priceWithTax="ngModel"
+					#priceWithTaxElemRef
+					placeholder="{{textAmount}}"
+					autocomplete="off"
+					(enter)="sendLine()"
+					(click)="priceWithTaxElemRef.select()">
+				<div *ngIf="priceWithTax.invalid && (priceWithTax.dirty || priceWithTax.touched)">
+					<div *ngIf="priceWithTax.errors?.required" class="txt-error">{{textFieldValidationErrorMessage}}</div>
+				</div>
+				<div class="txt-error">
+					{{ notAllowedMessage }}
+				</div>
+			</div>
+		</md-tab>
+		<md-tab label="{{ textDiscount | uppercase }}">
+			<div class="col-xs-12">
+				<input
+					tpvKeyboard
+					class="form-control txtRight"
+					[(ngModel)]="lineToEdit.discountPercentage"
+					name="discountPercentage"
+					type="number"
+					required
+					pattern="^(\d{0,2}(\.\d{1,2})?|100(\.00?)?)$"
+					#discountPercentage="ngModel"
+					#discountPercentageElemRef
+					placeholder="{{textDiscount}}"
+					autocomplete="off"
+					(enter)="sendLine()"
+					(click)="discountPercentageElemRef.select()">
+					<div *ngIf="discountPercentage.invalid && (discountPercentage.dirty || discountPercentage.touched)">
+						<div *ngIf="discountPercentage.errors?.required" class="txt-error">{{textFieldValidationErrorMessage}}</div>
+					</div>
+					<div *ngIf="discountPercentage.errors?.pattern">
+						<div class="txt-error">{{discountPercentageValidationErrorMessage}}</div>
+					</div>
+				<div class="txt-error">
+					{{ notAllowedMessage }}
+				</div>
+			</div>
+		</md-tab>
+	</md-tab-group> -->
+	<!-- <div class="button-bottom">
+		<button md-raised-button class="col-xs-12" type="submit" [disabled]="editLineForm.invalid || discountPercentage.errors?.pattern">Modificar {{ selectedTabName | lowercase }}</button>
+	</div> -->
+</form>
+<div style="height: 45%;width: 68%;margin-left: 18%;">
+		<tpv-static-keyboard></tpv-static-keyboard>
+</div>
+</div>
+<!-- NOTA: valida con type=number de HTML5 y se validan campos con expresión regular en lógica
+	(aunque se elimine el type number en el HTML, no se podrá modificar la línea).
+Juntos en el HTML colisionan porque type number con malos formatos como 5,5,5 lo transforma a vacío -->

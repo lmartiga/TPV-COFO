@@ -1,0 +1,22 @@
+<div class="RectangleNumChangeDelivered" style="width: 100%;">
+    <div style="background-color:#003b5c;height: 100%; border-radius: 4px;" class="col-xs-12 numeric-keyboardChangeDelivered noP">
+        <div class="col-xs-12 noP header" style="height: 20%;">
+            <div style="height: 77%; margin:2%;">
+                <input class="text" [type]="isPassword ? 'password' : 'text'" style="padding: 6px 12px;" readonly placeholder="{{placeholderToShow | uppercase}}" [(ngModel)]="value">
+            </div>
+        </div>
+        <div class="col-xs-12 noP container-buttons-keyboard-static">
+            <div *ngFor="let key of numKeys; let i = index">
+                <div class="buttons-keyboard-numeric">
+                    <button *ngIf="key.number !== ''" md-raised-button class="key-button key-button-2 custom-button-numeric" [ngClass]='key.class' (click)="addValue(key.number,false)"><span [ngStyle]="{'font-size': sizeNumbers ? '1.5em' : '1em'}" style="font-family: 'TypeRegular', Repsol !important;">{{key.number}}</span></button>
+                    <button *ngIf="key.number == ''" md-raised-button class="key-button key-button-2 custom-button-delete borderRight" [ngStyle]="{'padding': sizeNumbers ? '3.5%' : '1.1%'}" (click)="delete()">
+                      <img src="assets/images/ico-calculator-delete-big.png"class="first">
+                  </button>
+                </div>
+            </div>
+        </div>
+        <div style="height:16%;width: 99%;" class="col-xs-12 noP content-button-confirm">
+            <button [disabled]="disabledBtnAcep" style="height: 100% !important;min-height: 0;margin-top:3%;" md-raised-button class="col-xs-12 btn-Aceptar custom-button-confirm" (click)="intro()">{{getLiteral('static_keyboard', 'keyboard_aceptar')}}</button>
+        </div>
+    </div>
+</div>

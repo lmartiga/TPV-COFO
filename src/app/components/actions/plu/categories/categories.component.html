@@ -1,0 +1,22 @@
+<div [hidden]="showSearchResult">
+    <div class="col-md-12" style="background: #eae7e4;">         
+        <div class="col-md-12 CategoriaPlu Rectangle-Copy-13"
+        style.background-color="{{getColorString(i)}}"
+        *ngFor="let pluItem of pluItems; let i = index"
+        (click)="setCurrentPLUItem(i)" checked="false">
+        {{pluItem.description}}
+        </div>   
+    </div>
+  <div class="col-md-12" style="background: #eae7e4;">       
+            <div class="col-xl-2 col-sm-3 col-xs-6 Rectangle-Copy-19 CafPLU"
+                *ngFor="let currentPLUProduct of currentPLUItem?.productList"
+                (click)="onSelectedProductById(currentPLUProduct.productId, true)" >          
+         
+               <!-- <img *ngIf="currentPLUProduct.imageHtmlBase64String" [hidden]="currentPLUProduct.ImageUrl == 'null'" [src]="currentPLUProduct.imageHtmlBase64String" class="imgcategoria"> 
+                <span *ngIf="!currentPLUProduct.imageHtmlBase64String">{{currentPLUProduct.description}}</span>-->
+                <span>{{currentPLUProduct.description}}</span>
+                
+        </div>   
+    </div>
+  
+</div>

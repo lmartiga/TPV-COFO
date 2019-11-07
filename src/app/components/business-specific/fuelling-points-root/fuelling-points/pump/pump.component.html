@@ -1,0 +1,102 @@
+<button *ngIf="fuellingPointInfo;else emptyPump" md-raised-button id="pump{{fuellingPointInfo.positionNumber}}"
+  class="pump-item" [ngClass]="setClassButton()" (click)="btnFuellingPointClick()"
+  (dblclick)="btnFuellingPointDobleClick($event)">
+  <div class="pump-number">
+    <span *ngIf="fuellingPointInfo.positionNumber!=undefined" class="number-span-pump">{{fuellingPointInfo.positionNumber | number:'2.0-1'}}</span>
+  </div>
+  <md-icon class="pump-state" [ngClass]="setClassTransactionIcon()"></md-icon>
+  <div style="height: 100%;position: absolute;" class="pump-data">
+    <div hidden="true" class="pump-prepay" [ngClass]="{visibleHidden:!fuellingPointInfo.hasSupplyLimit}">
+      <ng-container *ngIf="fuellingPointInfo.limitValue>0;else unkownLimit">
+        {{fuellingPointInfo.limitValue|number:limitFormatter}}{{limitSymbol}}</ng-container>
+      <ng-template #unkownLimit>
+        {{getLiteral('pump_component', 'literal_unkownLimit')}}
+      </ng-template>
+    </div>
+    <ng-container *ngIf="fuellingDataInitial">
+        <div class="content-info-pumps" *ngIf="fuellingDataInitial!=undefined">
+          <div class="pumpamountsupplyTopNoBorder" [ngClass]="{visibleHidden:fuellingDataInitial.amount==undefined}"
+            *ngIf="fuellingDataInitial!=undefined">
+            {{fuellingDataInitial.amount|number:formatConfig.moneyPipeFormat}}{{formatConfig.currency.symbol}}
+          </div>
+          <img *ngIf="fuellingProductData != undefined" [src]="srcGrade()" class="pump-img-bottom"
+            [ngClass]="{visibleHidden:fuellingProductData.gradeId == undefined}">
+        </div>
+      </ng-container>
+    <ng-container *ngIf="fuellingData!=undefined; else iconTemplate">
+        <!-- Waylet con imagen-->
+      <img *ngIf="textServiceModeWaylet() == 'WayletPaid'" src="assets/images/waylet.png" class="waylet material-icons mat-color-ok">
+      <div hidden = 'true' class="pump-litres" [ngClass]="{visibleHidden:fuellingData.vol==undefined}">
+        {{fuellingData.vol|number:formatConfig.volumePipeFormat}}{{formatConfig.volume.symbol}}</div>
+      <div  hidden = 'true' class="pump-amount" [ngClass]="{visibleHidden:fuellingData.amount==undefined}">
+        {{fuellingData.amount|number:formatConfig.moneyPipeFormat}}{{formatConfig.currency.symbol}}</div>
+    </ng-container>
+    <ng-template #iconTemplate>
+      <div *ngIf="!fuellingDataInitial"> 
+          <md-icon class="pump-icon" [ngClass]="setClassIcon()"></md-icon>
+          <!-- Waylet con imagen-->
+            <img *ngIf="textServiceModeWaylet() == 'WayletPaid'" src="assets/images/waylet.png" class="waylet material-icons mat-color-ok">
+          <!-- Waylet con icono blanco-->
+         <!--<md-icon style="margin-left: 30px;" *ngIf="textServiceModeWaylet() == 'WayletPaid'" class="material-icons mat-color-accent">phonelink_ring</md-icon>-->
+          <!-- Waylet con letras-->
+          <!-- <md-icon *ngIf="textServiceModeWaylet() == 'WayletPaid'" class="md-icon"> Waylet</md-icon>-->     
+      </div>
+    </ng-template>
+    <ng-container *ngIf="false">
+      <!-- -->
+      <div class="pump-cost" [ngClass]="{visibleHidden:fuellingProductData.unitaryPrice == undefined}">
+        {{fuellingProductData.unitaryPrice|number:formatConfig.moneyPipeFormat}}{{formatConfig.unitPriceSymbol}}</div>
+      <img [src]="srcGrade()" class="pump-img-bottom" [ngClass]="{visibleHidden:fuellingProductData.gradeId == undefined}">
+    </ng-container>
+    <!--<ng-container *ngIf="isSupplyAuthorized && fuellingPointInfo.limitType">-->
+    <ng-container *ngIf="isSupplyAuthorized && fuellingPointInfo;">
+		<div  *ngIf="fuellingPointInfo.limitValue != undefined">
+		  <div class="content-info-pumps" *ngIf="fuellingPointInfo.limitValue > 0;"> <!--class:pumpamountsupplyAuthorization-->
+			<div  *ngIf="fuellingPointInfo.limitValue > 0">
+			  <div style="width: 100%;">-
+				{{(fuellingPointInfo.limitType === limitTypeMonetary ? fuellingPointInfo.limitValue : fuellingPointInfo.limitProductUnitaryPrice * fuellingPointInfo.limitValue) | number:formatConfig.moneyPipeFormat}} {{formatConfig.currency.symbol}}</div>
+			  <img *ngIf="fuellingProductData!=undefined;" [src]="srcGrade()" class="pump-img-bottom" [ngClass]="{visibleHidden:fuellingProductData.gradeId == undefined}">
+			</div>
+		  </div>
+		</div>
+     <!-- <img [src]="srcGrade()" class="pump-img" [ngClass]="{visibleHidden:fuellingProductData.gradeId == undefined}"> -->
+    </ng-container>
+  <ng-container *ngIf="fuellingData!=undefined;">
+    <div class="content-info-pumps" *ngIf="fuellingData!=undefined; else iconTemplate">
+      <div class="pumpamountsupplyTopNoBorder" [ngClass]="{visibleHidden:fuellingData.amount==undefined}"
+        *ngIf="fuellingData!=undefined; else iconTemplate">
+        {{fuellingData.amount|number:formatConfig.moneyPipeFormat}}{{formatConfig.currency.symbol}}
+      </div>
+      <img *ngIf="fuellingProductData != undefined" [src]="srcGrade()" class="pump-img-bottom"
+        [ngClass]="{visibleHidden:fuellingProductData.gradeId == undefined}">
+    </div>
+  </ng-container>
+  <ng-container *ngIf="supplyTransactions && !isSupplyAuthorized">
+    <div class="pumpSupplySale">
+      <div *ngIf="supplyTransactions.length <= 2" [ngClass]="assignClassPump(2)">
+          <div *ngFor="let supplytransaction of supplyTransactions;let i = index;"  [ngStyle]="{ i: 0 ? 'top: 0 !important' : 'bottom: 0!important' }">
+            <div *ngIf="!supplytransaction.lockingPOSId" [ngClass]="assignClassPump(1)">
+            {{supplytransaction.money}}
+            {{formatConfig.currency.symbol}}
+            </div>
+            <div *ngIf="supplytransaction.fuellingLimitValue > 0">
+              <div [ngClass]="isPrePayCompleted()? '':'waitOperationColor' " [ngClass]="assignClassPump(1)">{{(supplytransaction.fuellingLimitType === limitTypeMonetary ? ((supplytransaction.money - supplytransaction.fuellingLimitValue) | number:formatConfig.moneyPipeFormat) : ((supplytransaction.money - supplytransaction.fuellingLimitValue * supplytransaction.gradeUnitPrice) | number:formatConfig.moneyPipeFormat))}} {{formatConfig?.currency?.symbol}}</div>
+            </div>
+            <img *ngIf="supplyTransactions.length == 1" [src]="getImgFromGrade(supplytransaction.gradeId)" class="pump-img-bottom"
+            [ngClass]="{visibleHidden:supplytransaction.gradeId == undefined}">
+          </div>
+      </div>
+      <div *ngIf="supplyTransactions.length > 2" class="content-info-pumps">
+          <div style="top:0;" class="pumpamountsupply">{{supplyTransactions[0].money}}
+            {{formatConfig.currency.symbol}}</div>
+          <div style="bottom:0;" class="pumpamountsupply"> {{getLiteral('pump_component', 'literal_puntos_suspensivos')}} </div>
+      </div>
+      <div >
+      </div>
+    </div>
+  </ng-container>
+</div>
+</button>
+<ng-template #emptyPump>
+  <button class="mat-raised-button pump-item mat-empty" disabled></button>
+</ng-template>

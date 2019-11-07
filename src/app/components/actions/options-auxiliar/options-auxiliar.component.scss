@@ -1,0 +1,63 @@
+.numeric-keyboardChangeDelivered .text{
+    width: 100% ;
+    height: 95%;
+    border-radius: 4px;
+    font-size: 2em ;
+    color: red;
+    text-align: center; 
+  }
+  .RectangleNumChangeDelivered {
+    width: 74%;
+    height: 100%;
+    background-color: #003b5c;
+    border-radius: 4px;
+    float: right;
+    vertical-align: bottom;
+  }
+ 
+  .botonEurosChangeDelivered {
+    width: 100%;
+    margin-bottom: 5%;
+    border-radius: 4px;
+    border: solid 0px;
+    box-shadow: 0 0 0 0;
+    min-width: 0px;
+  }
+  .ilust_ticket_ok {
+    width: 127px;
+    height: 141px;
+    display: block;
+    margin: auto;
+    object-fit: contain;
+    margin-bottom: 2%;
+  }
+  .ico_alert {
+    width: 41.7px;
+    height: 30px;
+    border-radius: 4.5px !important;
+  }
+  .button_Alert_right {
+    float: right;
+    height: 78%;
+    border-radius: 4px;
+    background-color: #e40028;
+    padding: 0;
+    color: white;
+    min-height: 0px;
+    min-width: 0px;
+    width: 30%;
+    margin-top: 1%;
+    margin-right: 2%;
+    border: 0;
+  }
+
+  .button_ico_back_left {
+    float: left;
+    height: 78%;
+    padding: 0px 4% 0px 4%;
+    border-radius: 4px;
+    min-height: 0px;
+    min-width: 0px;
+    width: 30%;
+    margin-top: 1%;
+  }

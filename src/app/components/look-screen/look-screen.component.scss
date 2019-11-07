@@ -1,0 +1,43 @@
+.container {
+    z-index: 999;
+    width: 100%;
+    height: calc(100% - 5em);
+    background-color: #003b5c;
+    position: relative;
+    float: left;
+    // -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 10%, 60% 10%, 60% 0%);
+    // clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 10%, 60% 10%, 60% 0%);
+}
+
+.childElement {
+    width: 284.4px;
+    height: 359px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+.button-emergency {
+    position: absolute;
+    right: 0;
+    width: 55%;
+    height: 10%;
+    background-color: #5e5c5b;
+}
+
+.childConfirm {
+    position: absolute;
+    width: 40%;
+    height: 65%;
+    margin: auto 45%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+}
+.session-blok {
+    display: initial;
+}

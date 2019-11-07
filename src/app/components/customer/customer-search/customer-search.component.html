@@ -1,0 +1,36 @@
+<div class="col-xs-12 noP height100" >
+  <div class="col-xs-12">
+    <form (ngSubmit)="selectCustomer()">
+      <div [hidden]="!dataSearch">
+        <md-icon (click)="limpiarDatos()" class="material-icons cancel input">cancel</md-icon>
+      </div>
+      <input tpvKeyboard [(ngModel)]="dataSearch" [ngModelOptions]="{standalone: true}" #customerSearch class="form-control"
+        (ngModelChange)="onSearchChange()" placeholder="{{getLiteral('customer_search_component', 'placeHolder_SelectCustomer')}}" type="text" [autofocus]="true" (enter)="selectCustomer()">
+    </form>
+  </div>
+  <br/>
+  <!-- Customers resultado -->
+  <div [hidden]="!(customers?.length > 0)" class="col-xs-12 noP scroll-100Height-Wrapper height100"  >
+    <div class="col-xs-12 noP scroll-100Height-Content">
+      <table class="table cliente">
+        <thead>
+          <tr>
+            <th class="col-md-4">{{getLiteral('customer_search_component', 'columnHeader_SearchCustomer_TIN')}}</th>
+            <th class="col-md-8">{{getLiteral('customer_search_component', 'columnHeader_SearchCustomer_Name')}}</th>
+            <th class="col-md-8">{{getLiteral('customer_search_component', 'columnHeader_SearchCustomer_Plate')}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr (click)="selectCustomerById(customer.id, customer.matricula)" *ngFor="let customer of customers; let i = index">
+            <td>{{ customer.tin }}</td>
+            <td>{{ customer.businessName }}</td>
+            <td>{{ customer.matricula }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div [hidden]="customers?.length > 0" class="col-xs-12 txt-error">
+    {{ searchMessage }}
+  </div>
+</div>

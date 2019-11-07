@@ -1,0 +1,17 @@
+.virtualKeyboarStyle {
+  position:absolute !important;
+  z-index: 999999;
+  width: auto;
+  top: 50%;
+  left: 33%;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.side-bar-fullscreen {
+  width: 100%;
+  background: transparent;
+}

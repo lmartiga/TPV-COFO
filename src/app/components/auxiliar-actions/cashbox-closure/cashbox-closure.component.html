@@ -1,0 +1,146 @@
+<h5 class="auxiliar-action-title">{{headerLiteral}}</h5>
+<form #cashboxClosureForm="ngForm" novalidate (ngSubmit)="onSubmit()">
+    <div class="col-xs-12">
+        <div class="input-group">
+          <input tpvKeyboard
+              class="form-control txtRight"
+              name="countedAmount"
+              type="text"
+              id="countedAmount"
+              required
+              [(ngModel)]="cashboxClosureData.countedAmount"
+              #countedAmount="ngModel"
+              placeholder="{{countedAmountLiteral}}"
+              min="0" step=".01"
+              (click)="$event.target.select()"
+              (enter)="onCountedAmountKeyEnterPressed()"/>
+          <span class="input-group-addon">{{currentCurrency.symbol}}</span>
+        </div>
+        <div *ngIf="countedAmount.invalid && (countedAmount.dirty || countedAmount.touched)">
+            <div *ngIf="countedAmount.errors.required" class="txt-error">campo requerido</div>
+        </div>
+    </div>
+
+<!-- MOCK PARA MOSTRAR EL AYUDANTE DE CONTEO. FALTARÍA ASOCIARLO A UN COMPONENTE DE ACORDEÓN Y UN CAJÓN EN QUE SE MUESTRE LA SUMA
+    <div class="col-xs-12">
+      <div class="col-lg-3 ui-btn"><span>1 {{currentCurrency.fractionarySymbol}}</span></div>
+      <div class="col-lg-3 noP">
+        <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+          <input class="form-control" type="number" [value]="counter.counted1c" (input)="counter.counted1c = $event.target.value" placeholder="0" min="0" data-value="0.01">
+        </div>
+      </div>
+      <div class="col-lg-3 ui-btn"><span>2 {{currentCurrency.fractionarySymbol}}</span></div>
+      <div class="col-lg-3 noP">
+        <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+          <input class="form-control" type="number" [value]="counter.counted2c" (input)="counter.counted2c = $event.target.value" placeholder="0" min="0" data-value="0.02">
+        </div>
+      </div>
+      <div class="col-lg-3 ui-btn"><span>5 {{currentCurrency.fractionarySymbol}}</span></div>
+      <div class="col-lg-3 noP">
+        <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+          <input class="form-control" type="number" [value]="counter.counted5c" (input)="counter.counted5c = $event.target.value" placeholder="0" min="0" data-value="0.05">
+        </div>
+      </div>
+      <div class="col-lg-3 ui-btn"><span>10 {{currentCurrency.fractionarySymbol}}</span></div>
+      <div class="col-lg-3 noP">
+        <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+          <input class="form-control" type="number" [value]="counter.counted10c" (input)="counter.counted10c = $event.target.value" placeholder="0" min="0" data-value="0.10">
+        </div>
+      </div>
+      <div class="col-lg-3 ui-btn"><span>20 {{currentCurrency.fractionarySymbol}}</span></div>
+      <div class="col-lg-3 noP">
+        <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+          <input class="form-control" type="number" [value]="counter.counted20c" (input)="counter.counted20c = $event.target.value" placeholder="0" min="0" data-value="0.20">
+        </div>
+      </div>
+      <div class="col-lg-3 ui-btn"><span>50 {{currentCurrency.fractionarySymbol}}</span></div>
+      <div class="col-lg-3 noP">
+        <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+          <input class="form-control" type="number" [value]="counter.counted50c" (input)="counter.counted50c = $event.target.value" placeholder="0" min="0" data-value="0.50">
+        </div>
+      </div>
+      <div class="col-lg-3 ui-btn"><span>1 {{currentCurrency.symbol}}</span></div>
+      <div class="col-lg-3 noP">
+        <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+          <input class="form-control" type="number" [value]="counter.counted1" (input)="counter.counted1 = $event.target.value" placeholder="0" min="0" data-value="1.00">
+        </div>
+      </div>
+      <div class="col-lg-3 ui-btn"><span>2 {{currentCurrency.symbol}}</span></div>
+      <div class="col-lg-3 noP">
+        <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+          <input class="form-control" type="number" [value]="counter.counted2" (input)="counter.counted2 = $event.target.value" placeholder="0" min="0" data-value="2.00">
+        </div>
+      </div>
+      <div class="col-lg-3 ui-btn"><span>5 {{currentCurrency.symbol}}</span></div>
+      <div class="col-lg-3 noP">
+        <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+          <input class="form-control" type="number" [value]="counter.counted5" (input)="counter.counted5 = $event.target.value" placeholder="0" min="0" data-value="5.00">
+        </div>
+      </div>
+      <div class="col-lg-3 ui-btn"><span>10 {{currentCurrency.symbol}}</span></div>
+      <div class="col-lg-3 noP">
+        <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+          <input class="form-control" type="number" [value]="counter.counted10" (input)="counter.counted10 = $event.target.value" placeholder="0" min="0" data-value="10.00">
+        </div>
+      </div>
+      <div class="col-lg-3 ui-btn"><span>20 {{currentCurrency.symbol}}</span></div>
+      <div class="col-lg-3 noP">
+        <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+          <input class="form-control" type="number" [value]="counter.counted20" (input)="counter.counted20 = $event.target.value" placeholder="0" min="0" data-value="20.00">
+        </div>
+      </div>
+      <div class="col-lg-3 ui-btn"><span>50 {{currentCurrency.symbol}}</span></div>
+      <div class="col-lg-3 noP">
+        <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+          <input class="form-control" type="number" [value]="counter.counted50" (input)="counter.counted50 = $event.target.value" placeholder="0" min="0" data-value="50.00">
+        </div>
+      </div>
+      <div class="col-lg-3 ui-btn"><span>100 {{currentCurrency.symbol}}</span></div>
+      <div class="col-lg-3 noP">
+        <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+          <input class="form-control" type="number" [value]="counter.counted100" (input)="counter.counted100 = $event.target.value" placeholder="0" min="0" data-value="100.00">
+        </div>
+      </div>
+      <div class="col-lg-3 ui-btn"><span>200 {{currentCurrency.symbol}}</span></div>
+      <div class="col-lg-3 noP">
+        <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+          <input class="form-control" type="number" [value]="counter.counted200" (input)="counter.counted200 = $event.target.value" placeholder="0" data-value="200.00">
+        </div>
+      </div>
+      <div class="col-lg-3 ui-btn"><span>500 {{currentCurrency.symbol}}</span></div>
+      <div class="col-lg-3 noP">
+        <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+          <input class="form-control" type="number" [value]="counter.counted500" (input)="counter.counted500 = $event.target.value" placeholder="0" min="0" data-value="500.00">
+        </div>
+      </div>
+    </div>
+-->
+    <div class="col-xs-12">
+        <div class="input-group">
+          <input tpvKeyboard
+              class="form-control taObservaciones txtRight"
+              name="extractedAmount"
+              type="text"
+              id="extractedAmount"
+              (click)="$event.target.select()"
+              required
+              [(ngModel)]="cashboxClosureData.extractedAmount"
+              #extractedAmount="ngModel"
+              placeholder="{{extractedAmountLiteral}}"
+              min="0" step=".01"
+              (enter)="onExtractedAmountKeyEnterPressed()"/>
+          <span class="input-group-addon">{{currentCurrency.symbol}}</span>
+        </div>
+        <div *ngIf="extractedAmount.invalid && (extractedAmount.dirty || extractedAmount.touched)">
+            <div *ngIf="extractedAmount.errors.required" class="txt-error">campo requerido</div>
+        </div>
+    </div>
+    <ng-container *ngIf="isRequestingCashboxClosure()">
+      <div class="col-xs-12 noP spinnerSlidder">
+        <md-progress-spinner mode="indeterminate"></md-progress-spinner>
+      </div>
+    </ng-container>
+    <div class="button-bottom">
+        <button md-raised-button class="col-xs-12" type="submit" [disabled]="isRequestingCashboxClosure() || cashboxClosureForm.invalid">{{submitLiteral}}</button>
+    </div>
+</form>

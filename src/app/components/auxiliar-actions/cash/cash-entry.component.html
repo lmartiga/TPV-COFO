@@ -1,0 +1,66 @@
+<h5 class="auxiliar-action-title">{{headerLiteral}}</h5>
+<form #cashEntryForm="ngForm" novalidate (ngSubmit)="onSubmit()">
+    <div class="col-xs-12">
+        <legend class="legend">{{cashRecordReasonsLiteral}}</legend>
+        <!-- BOTONES CON LOS TIPOS DE APUNTE -->
+        <div *ngFor="let cashboxRecordReason of availableCashboxRecordReasons; let i = index">
+            <div *ngIf="cashboxRecordReason != undefined">
+                <button md-raised-button type="button" class="col-xs-{{availableCashboxRecordReasonsButtonColumnWidthList[i]}}" (click)="cashboxRecordReasonSelected(cashboxRecordReason)"
+                    [ngClass]="{'selected' : cashboxRecordReason.id === cashEntryData.cashboxRecordReason.id}">
+                    {{cashboxRecordReason.caption}}
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="input-group">
+            <input tpvKeyboard
+                class="form-control txtRight"
+                name="amount"
+                type="text"
+                id="amount"
+                required
+                [(ngModel)]="cashEntryData.amount"
+                #amount="ngModel"
+                placeholder="{{amountLiteral}}"
+                min="0" step=".01"
+                (enter)="onAmountKeyEnterPressed()"
+                (click)="$event.target.select()"/>
+            <span class="input-group-addon">{{cashEntryData.currency.symbol}}</span>
+        </div>
+        <div *ngIf="amount.invalid && (amount.dirty || amount.touched)">
+            <div *ngIf="amount.errors.required" class="txt-error">campo requerido</div>
+        </div>
+    </div>
+    <!-- ESPACIO -->
+    <div></div>
+    <div class="col-xs-12">
+        <!-- BOTONES DE SELECCIÓN DE MONEDA -->
+        <div *ngFor="let currency of availableCurrencies; let i = index">
+            <div *ngIf="currency != undefined">
+                <button md-raised-button color="primary1" type="button" class="col-xs-{{currencyButtonColumnWidthList[i]}}" (click)="currencySelected(currency)"
+                    [ngClass]="{'selected' : currency.id === cashEntryData.currency.id}">
+                    {{currency.symbol}}
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <input tpvKeyboard
+            class="form-control taObservaciones"
+            name="observations"
+            type="string"
+            [(ngModel)]="cashEntryData.observations"
+            placeholder="{{observationsLiteral}}"
+            maxlength={{maximumObservationsLength}}
+            (enter)="onObservationsKeyEnterPressed()"/>
+    </div>
+    <ng-container *ngIf="isRequestingCashEntry()">
+        <div class="col-xs-12 noP spinnerSlidder">
+          <md-progress-spinner mode="indeterminate"></md-progress-spinner>
+        </div>
+    </ng-container>
+    <div class="button-bottom">
+        <button md-raised-button class="col-xs-12 mat-raised-button mat-primary2" type="submit" [disabled]="cashEntryForm.invalid || isRequestingCashEntry()">{{submitLiteral}}</button>
+    </div>
+</form>

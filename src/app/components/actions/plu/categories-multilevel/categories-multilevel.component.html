@@ -1,0 +1,28 @@
+<div [hidden]="showSearchResult">
+    <div class="col-md-12" *ngIf="isVoidCurrentPLUItem()">
+            <button class="col-lg-2 col-md-3 col-sm-3 col-xs-3 col-xxs-3 plu-item mat-raised-button" 
+                    style.background-color="{{getColorString(i)}}"
+                    *ngFor="let pluItem of pluItems; let i = index" 
+                    (click)="setCurrentPLUItem(i)">
+                {{pluItem.description}}
+            </button>
+    </div>
+    <div class="col-md-12" *ngIf="!isVoidCurrentPLUItem()">  
+        <button md-raised-button class="plu-subcategory col-xs-12" (click)="cleanCurrentPLUItem()">
+                <md-icon class="material-icons">keyboard_backspace</md-icon>
+                <span>{{currentPLUItem.description}}</span>
+        </button>
+        
+        <div class="col-xs-12 noPH">
+            <button md-raised-button class="col-xl-2 col-sm-3 col-xs-6 plu-item mat-raised-button" 
+                    *ngFor="let currentPLUProduct of currentPLUItem?.productList"
+                    (click)="onSelectedProductById(currentPLUProduct.productId)">
+            <div>
+                <img [hidden]="currentPLUProduct.ImageUrl == 'null'" src="{{currentPLUProduct.imageHtmlBase64String}}" class="img-max">
+                <span>{{currentPLUProduct.description}}</span>
+            </div>
+            </button>
+        </div>
+        
+    </div>
+</div>

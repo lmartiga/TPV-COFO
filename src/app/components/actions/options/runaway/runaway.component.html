@@ -1,0 +1,18 @@
+<h5 class="auxiliar-action-title">{{getLiteral('runaway_component', 'header_Runaway')}}</h5>
+<div *ngIf="!mostrarMensaje()">
+    <form #runawayForm="ngForm" novalidate (ngSubmit)="onSubmit()">
+        <div class="col-xs-12">
+            <input tpvKeyboard class="form-control" name="plate" type="text" [(ngModel)]="runawayData.plate" #plate="ngModel" placeholder="{{getLiteral('runaway_component', 'placeHolder_Runaway_Plate')}}" />
+        </div>
+        <div class="col-xs-12">
+            <textarea tpvKeyboard type="text" class="form-control taObservaciones" name="remarks" [(ngModel)]="runawayData.remarks" #remarks="ngModel" placeholder="{{getLiteral('runaway_component', 'placeHolder_Runaway_Observations')}}">
+    </textarea>
+        </div>
+        <div class="button-bottom">
+            <button md-raised-button class="col-xs-12 mat-raised-button mat-primary2" type="submit">{{getLiteral('runaway_component', 'bottomButton_Runaway_Finish')}}</button>
+        </div>
+    </form>
+</div>
+<div class="col-lg-12" *ngIf="mostrarMensaje()">
+    <h4>{{mensaje}}</h4>
+</div>

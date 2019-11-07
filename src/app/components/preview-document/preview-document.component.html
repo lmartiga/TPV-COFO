@@ -1,0 +1,47 @@
+<div class="container-fluid">
+  <div class="row" >
+    <div class="col-md-12" [style.font-size.em]="1.5">
+      <div class="col-md-6 izq">{{getLiteral('preview_document_component', 'headerPreview_DocNumber')}}</div>
+      <div class="col-md-6 txtRight der bold">{{ticket?.documentNumber}}</div>
+      <div class="col-md-6 izq">{{getLiteral('preview_document_component', 'headerPreview_Customer')}}</div>
+      <div class="col-md-6 txtRight der bold">{{ticket?.customer?.businessName}}</div>
+      <div class="col-md-6 izq">{{getLiteral('preview_document_component', 'headerPreview_Date')}}</div>
+      <div class="col-md-6 txtRight der bold">{{ticket?.emissionLocalDateTime?.toLocaleString()}}</div>
+    </div>
+  </div>
+  <div class="row">
+    <div #wrapperTablePreview class="col-xs-12 overflowHidden claseCOFO" [style.padding-top.px]="0" [style.padding-bottom.px]="0">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="txtLeft">{{getLiteral('preview_document_component', 'table_quantity')}}.</th>
+            <th class="txtLeft">{{getLiteral('preview_document_component', 'table_description')}}.</th>
+            <th class="txtLeft">{{getLiteral('preview_document_component', 'table_price')}}</th>
+            <th class="txtLeft">%</th>
+            <th class="txtRight">{{currencyInfo?.symbol}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let line of ticket?.lines; let i = index;" class="lin">
+            <td class="txtLeft">{{ line?.quantity }}</td>
+            <td class="txtLeft">{{ line?.description }}</td>
+            <td class="txtLeft nowrap" >{{ line?.priceWithTax }}</td>
+            <td class="txtLeft">{{ line?.discountPercentage }}</td>
+            <td class="txtRight nowrap" >{{ line?.totalAmountWithTax }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="col-xs-12 noP">
+        <!-- Summary -->
+        <section class="summary">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-xxs-6 total">
+            <h4>{{getLiteral('common', 'total')}}</h4>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-xxs-6 ammount txtRight">
+            <h4>{{ticket?.totalAmountWithTax.toFixed(2) }}{{currencyInfo?.symbol}}</h4>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

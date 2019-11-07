@@ -1,0 +1,26 @@
+<ng-container *ngIf="fpInformation;else loading">
+  <tpv-fuelling-actions [btnStopChecked]="btnStopCheckStatus" [btnNightChecked]="btnNightCheckStatus" (btnStopClickEvent)="btnStopClick($event)"
+    (btnNightClickEvent)="btnNigthClick($event)" (btnTransactionsClickEvent)="btnTransactionsClick()"></tpv-fuelling-actions>
+  <div class="fuelling-pumps">
+    <ng-container *ngFor="let pump of fpInformation;let i=index">
+      <ng-container *ngIf="(pump.positionNumber - i -1 > 0)">
+        <tpv-pump *ngFor="let empty of createRange(i,pump.positionNumber)"></tpv-pump>
+      </ng-container>
+      <tpv-pump [isTicket]="isTicket"  [isCreditCardPayment]="isCreditCardPayment" [fuellingPointInfo]="pump" [fpSupplyTransaction]="fpSupplyTransaction" [formatConfig]="fpFormatConfig" (fpSelectedEvent)="fuellingPointSelected($event)"></tpv-pump>
+    </ng-container>
+  </div>
+</ng-container>
+<ng-template #loading>
+  <div class="container width100">
+    <div class="row">
+      <div class="col-xs-12">
+        <h4>
+          {{getLiteral('fuelling_points_component', 'loadingMessage_FuellingPoints_RetrievingFuellingPoints')}}
+        </h4>
+      </div>
+      <div class="col-xs-12 noP spinnerSlidder">
+        <md-progress-spinner mode="indeterminate"></md-progress-spinner>
+      </div>
+    </div>
+  </div>
+</ng-template>

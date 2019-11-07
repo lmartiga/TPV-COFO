@@ -1,0 +1,4 @@
+<h5 class="auxiliar-action-title">{{ isRunawayDebt ? getLiteral('collections_components', 'header_Collections_RunawayCollection') : getLiteral('collections_components', 'header_Collections_PendingCollection') }}</h5>
+<div>
+    <tpv-document-search [documentSearchFilters]="documentSearchFilters" (documentSelected)="onDocumentSelected($event)" [fromDate]="defaultRecentDateCollection" [searchMode]="documentSearchMode"></tpv-document-search>
+</div>

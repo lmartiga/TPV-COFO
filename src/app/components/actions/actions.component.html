@@ -1,0 +1,22 @@
+<div [hidden]="_changeData.isTicket" style="height: 100%;background-color: #EAE7E4;">
+<div style="height: 10%">
+<tpv-options-auxiliar origen="actions"></tpv-options-auxiliar>
+</div>
+<div style="height: 90%">
+<md-tab-group  [@.disabled]="true" (selectChange)="actionSelected($event)" [(selectedIndex)]="selectedTab" class="lines" style="height: 100%;background-color: #cbc4bc;">
+  
+      <md-tab style="height: 100%;" label="{{getLiteral('actions_component', 'tab_PLU')}}">
+        <div style="height: 100%;">
+          <tpv-plu style="height: 100%;" [ngClass]="isCustomerAvailable() && isOperatorAvailable() ? '' : 'disabled'"></tpv-plu>
+        </div>
+      </md-tab>
+      <md-tab style="height: 100%;" label="{{getLiteral('actions_component', 'tab_Options')}}">
+          <tpv-options style="height: 100%;" [ngClass]="isOperatorAvailable() ? '' : 'disabled'"></tpv-options>
+      </md-tab>
+  </md-tab-group>
+</div>
+</div>
+<div [hidden] ="!_changeData.isTicket" style="height: 100%">
+  <tpv-change-delivered [changeData]="_changeData"></tpv-change-delivered>
+</div>
+<ng-container #actionsHost></ng-container>

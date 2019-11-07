@@ -1,0 +1,16 @@
+<div class="col-12 noP width100">
+    <div class="col-xs-12 noP">
+      <h5 class="auxiliar-action-title">{{getLiteral('confirm_action_static', 'literal_ConfirmActionStatic_Titulo')}}</h5>
+    </div>
+    <div class="col-xs-12 noP">
+      <h4 class="txtCenter" style="margin-top: 20%;">{{textQuestion}}</h4>
+    </div>
+    <div class="button-bottom">
+      <div class="noP" [ngClass]="externalpopup ? 'col-md-12' : 'col-md-6'">
+        <button md-raised-button class="width100" *ngIf="btnaceptar" (click)="fnConfirmClick()">{{getLiteral('confirm_action_static', 'literal_ConfirmActionStatic_Aceptar')}}</button>
+      </div>
+      <div class="col-md-6 noP">
+        <button md-raised-button class="width100" *ngIf="btncancelar" (click)="fnCancelClick()">{{getLiteral('confirm_action_static', 'literal_ConfirmActionStatic_Cancel')}}</button>
+      </div>
+    </div>
+</div>

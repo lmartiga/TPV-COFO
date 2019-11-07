@@ -1,0 +1,170 @@
+@mixin box-shadow($direction: bottom, $strength: 1, $color: black) {
+    @if $direction == "top" {
+      box-shadow: 0 -2px 6px rgba($color, $strength * 0.15);
+    }
+    @if $direction == "right" {
+      box-shadow: -2px 0 6px rgba($color, $strength * 0.15);
+    }
+    @if $direction == "bottom" {
+      box-shadow: 0 6px 6px rgba($color, $strength * 0.15);
+    }
+    @if $direction == "left" {
+      box-shadow: 6px 0 6px rgba($color, $strength * 0.15);
+    }
+    @if $direction == "center" {
+        box-shadow: 0 1px 3px rgba($color, $strength * 0.15), 0 1px 2px rgba($color, $strength * 0.15);
+      }
+}
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    // IE8 filter
+    $opacity-ie: ($opacity * 100);
+    filter: alpha(opacity=$opacity-ie);
+}
+@mixin changeColor($color1, $color2){
+  @keyframes changeColorAnim {
+    0% {
+        color: $color1;
+    }
+    50% {
+        color: $color2;
+    }
+    100% {
+        color: $color1;
+    }
+  }
+  }
+  @mixin changeOpacity($opacity1, $opacity2){
+  @keyframes opacity {
+    0% {
+        opacity: $opacity1;
+    }
+    50% {
+      opacity: $opacity2;
+    }
+    100% {
+        opacity:$opacity1;
+    }
+  }
+  }
+// bootstrap mixins for custom column width
+$grid-columns:              12;
+$grid-gutter-width:         30px;
+$grid-float-breakpoint:     768px;
+$screen-sm-min:             768px;
+$screen-md-min:             992px;
+$screen-lg-min:             1200px;
+// Generate the extra small columns
+@mixin make-xs-column($columns, $gutter: $grid-gutter-width){
+  position: relative;
+  // Prevent columns from collapsing when empty
+  min-height: 1px;
+  // Inner gutter via padding
+  padding-left:  ($gutter / 2);
+  padding-right: ($gutter / 2);
+
+  // Calculate width based on number of columns available
+  @media (min-width: $grid-float-breakpoint) {
+    float: left;
+    width: percentage(($columns / $grid-columns));
+  }
+}
+
+// Generate the small columns
+@mixin make-sm-column($columns, $gutter: $grid-gutter-width, $minWidth-sm: $screen-sm-min){
+  position: relative;
+  // Prevent columns from collapsing when empty
+  min-height: 1px;
+  // Inner gutter via padding
+  padding-left:  ($gutter / 2);
+  padding-right: ($gutter / 2);
+
+  // Calculate width based on number of columns available
+  @media (min-width: $minWidth-sm) {
+    float: left;
+    width: percentage(($columns / $grid-columns));
+  }
+}
+
+// Generate the small column offsets
+@mixin make-sm-column-offset($columns, $minWidth-sm: $screen-sm-min){
+  @media (min-width: $minWidth-sm) {
+    margin-left: percentage(($columns / $grid-columns));
+  }
+}
+@mixin make-sm-column-push($columns, $minWidth-sm: $screen-sm-min){
+  @media (min-width: $minWidth-sm) {
+    left: percentage(($columns / $grid-columns));
+  }
+}
+@mixin make-sm-column-pull($columns, $minWidth-sm: $screen-sm-min){
+  @media (min-width: $minWidth-sm) {
+    right: percentage(($columns / $grid-columns));
+  }
+}
+
+// Generate the medium columns
+@mixin make-md-column($columns, $gutter: $grid-gutter-width, $minWidth: $screen-md-min){
+  position: relative;
+  // Prevent columns from collapsing when empty
+  min-height: 1px;
+  // Inner gutter via padding
+  padding-left:  ($gutter / 2);
+  padding-right: ($gutter / 2);
+
+  // Calculate width based on number of columns available
+  @media (min-width: $minWidth) {
+    float: left;
+    width: percentage(($columns / $grid-columns));
+  }
+}
+
+// Generate the medium column offsets
+@mixin make-md-column-offset($columns, $minWidth: $screen-md-min){
+  @media (min-width: $minWidth) {
+    margin-left: percentage(($columns / $grid-columns));
+  }
+}
+@mixin make-md-column-push($columns, $minWidth: $screen-md-min){
+  @media (min-width: $minWidth) {
+    left: percentage(($columns / $grid-columns));
+  }
+}
+@mixin make-md-column-pull($columns, $minWidth: $screen-md-min){
+  @media (min-width: $minWidth) {
+    right: percentage(($columns / $grid-columns));
+  }
+}
+
+// Generate the large columns
+@mixin make-lg-column($columns, $gutter: $grid-gutter-width, $minWidth: $screen-lg-min){
+  position: relative;
+  // Prevent columns from collapsing when empty
+  min-height: 1px;
+  // Inner gutter via padding
+  padding-left:  ($gutter / 2);
+  padding-right: ($gutter / 2);
+
+  // Calculate width based on number of columns available
+  @media (min-width: $minWidth) {
+    float: left;
+    width: percentage(($columns / $grid-columns));
+  }
+}
+
+// Generate the large column offsets
+@mixin make-lg-column-offset($columns, $minWidth: $screen-md-min){
+  @media (min-width: $minWidth) {
+    margin-left: percentage(($columns / $grid-columns));
+  }
+}
+@mixin make-lg-column-push($columns, $minWidth: $screen-md-min){
+  @media (min-width: $minWidth) {
+    left: percentage(($columns / $grid-columns));
+  }
+}
+@mixin make-lg-column-pull($columns, $minWidth: $screen-md-min){
+  @media (min-width: $minWidth) {
+    right: percentage(($columns / $grid-columns));
+  }
+}

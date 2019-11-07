@@ -1,0 +1,46 @@
+<div>
+  <h5 class="auxiliar-action-title">{{getLiteral('document_copy_preview_component', 'header_CopyPreview')}}</h5>
+  <div class="col-md-12">
+    <div class="col-md-6 izq">{{getLiteral('document_copy_preview_component', 'literal_CopyPreview_DocumentNumber')}}</div>
+    <div class="txtRight der col-md-6">{{documento.DocumentId}}</div>
+    <div class="col-md-6 izq">{{getLiteral('document_copy_preview_component', 'literal_CopyPreview_Customer')}}</div>
+    <div class="txtRight der col-md-6">{{documento.customer.businessName}}</div>
+    <div class="col-md-6 izq">{{getLiteral('document_copy_preview_component', 'literal_CopyPreview_Date')}}</div>
+    <div class="txtRight der col-md-6">{{documento.emissionUTCDateTime}}</div>
+  </div>
+  <div class="divOverflow">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="txtLeft">{{getLiteral('document_copy_preview_component', 'literal_CopyPreview_Quantity')}}</th>
+          <th class="txtLeft">{{getLiteral('document_copy_preview_component', 'literal_CopyPreview_Description')}}</th>
+          <th class="txtLeft">{{getLiteral('document_copy_preview_component', 'literal_CopyPreview_Price')}}</th>
+          <th class="txtLeft">{{getLiteral('document_copy_preview_component', 'literal_CopyPreview_Discount')}}</th>
+          <th class="txtRight">{{simbol}}</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let line of documento.lines; let i = index;">
+        <tr class="lin">
+          <td class="txtLeft">{{ line.quantity }}</td>
+          <td class="txtLeft">{{ line.description }}</td>
+          <td class="txtLeft">{{ line.priceWithTax }}</td>
+          <td class="txtLeft">{{ line.discountPercentage }}</td>
+          <td class="txtRight">{{ line.totalAmountWithTax }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Summary -->
+  <section class="summary">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-xxs-6 total">
+      <h4>{{getLiteral('common', 'total')}}</h4>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-xxs-6 ammount txtRight">
+      <h4>{{documento.totalAmountWithTax }}{{simbol}}</h4>
+    </div>
+  </section>
+  <div class="button-bottom">
+    <button md-raised-button color="primary1" (click)="volver()" class="col-xs-6">{{getLiteral('document_copy_preview_component', 'bottomButton_CopyPreview_Return')}}</button>
+    <button md-raised-button color="primary1" (click)="emitirCopiaTicket()" class="col-xs-6">{{getLiteral('document_copy_preview_component', 'bottomButton_CopyPreview_Print')}}</button>
+  </div>
+</div>

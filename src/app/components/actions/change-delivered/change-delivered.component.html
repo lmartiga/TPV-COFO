@@ -1,0 +1,113 @@
+<div class="mat-tab-body-content" style="height: 100%;background-color: #EAE7E4;">
+  <div style="padding-left: 2%;padding-right: 2%;padding-bottom: 2%;height: 98%;">
+    <div style="height: 35%;">
+      <div style="display: flow-root;height: 25%;">
+        <tpv-options-auxiliar>
+        </tpv-options-auxiliar>
+      </div>
+      <div style="height: 20%;text-align: center;">
+        <h4 style="font-weight: bold;display: inline-block;">{{changeData.ticket}} </h4>
+        <h4 style="display: inline-block;">{{getLiteral('change_delivered_component', 'literal_cobro')}}</h4>
+      </div>
+      <div style="height: 55%;">
+        <div [ngStyle]="{background: 'url(assets/images/bg-ticket-descuentos.svg)','background-size': 'cover'}"
+          class="col-xs-12 numeric-keyboardChangeDelivered noP" style="height: 100%;">
+          <div class="col-xs-12">
+            <div class="col-xs-7" style="text-align: center;margin-top: 5%;">
+              <label
+                style="color: #e40028;font-size: 20px;">{{getLiteral('change_delivered_component', 'literal_cambio_pendiente')}}</label>
+            </div>
+            <div class="col-xs-5" style="text-align: left;">
+              <label
+                style="color: #e40028;font-size: 40px;font-weight: bold;margin-bottom:2%;">{{totalChangedDelivered | number:formatConfig.moneyPipeFormat}}{{baseCurrency.symbol}}</label>
+            </div>
+            <hr style="border-top:2px solid #eae7e4;text-align: center; width: 85%; margin-bottom: 2.5%;" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <h5 class="txtCenter" [hidden]="!_requestingSendSale">{{mainTextComponentLiteral}}</h5>
+    <section style="height: 60%;" [hidden]="changeData.isCharged">
+      <div style="margin-top: 5%;">
+        <div class="col-xs-12 RectangleNumChangeDelivered">
+          <div class="col-xs-12 numeric-keyboardChangeDelivered noP">
+            <div class="col-xs-12 noP header">
+              <div style="height: 60px; margin: 2%;">
+                <input class="text placehol-estilo" type="text" #importval="ngModel" readonly id="importevalue"
+                  placeholder="{{getLiteral('change_delivered_component', 'literal_importevalue')}}"
+                  [(ngModel)]="value">
+              </div>
+            </div>
+            <div class="col-xs-12 noP" class="container-buttons-keyboard-numeric">
+              <div *ngFor="let key of numKeys; let i = index">
+                <div class="buttons-keyboard-numeric">
+                  <button *ngIf="key.number !== ''" md-raised-button
+                    class="key-button key-button-2 custom-button-numeric " [ngClass]='key.class'
+                    (click)="addValue(key.number,false, importval)"><span
+                      class="keyboard-number-individual">{{key.number}}</span></button>
+                  <button *ngIf="key.number == ''" md-raised-button
+                    class="key-button key-button-2 custom-button-delete borderRight " (click)="delete()">
+                    <img src="assets/images/ico-calculator-delete-big.png" class="first">
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 noP content-button-confirm">
+              <button [disabled]="value === ''" md-raised-button class="col-xs-12 btn-Aceptar custom-button-confirm"
+                style="height: 100% !important;min-height: 0px;"
+                (click)="intro()">{{getLiteral('change_delivered_component', 'literal_button_aceptar')}} </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-3 noP" style="width: 24%;">
+          <button md-raised-button class="key-button botonEurosChangeDelivered" style="margin-top: 40%;color: #6e6259;"
+            (click)="addValue('5',true)">{{getLiteral('change_delivered_component', 'literal_botonEuro_5')}}
+            {{baseCurrency.symbol}}</button>
+          <button md-raised-button class="key-button botonEurosChangeDelivered" style="color: #6e6259;"
+            (click)="addValue('10',true)">{{getLiteral('change_delivered_component', 'literal_botonEuro_10')}}
+            {{baseCurrency.symbol}}</button>
+          <button md-raised-button class="key-button botonEurosChangeDelivered" style="color: #6e6259;"
+            (click)="addValue('20',true)">{{getLiteral('change_delivered_component', 'literal_botonEuro_20')}}
+            {{baseCurrency.symbol}}</button>
+          <button md-raised-button class="key-button botonEurosChangeDelivered" style="color: #6e6259;"
+            (click)="addValue('50',true)">{{getLiteral('change_delivered_component', 'literal_botonEuro_50')}}
+            {{baseCurrency.symbol}}</button>
+        </div>
+      </div>
+    </section>
+    <section style="height: 60%;margin-top: 5%;" [hidden]="!changeData.isCharged">
+      <div style="height: 100%;">
+        <img src="assets/images/ilust-ticket-ok.png" srcset="assets/images/ilust-ticket-ok@2x.png 2x,
+                        assets/images/ilust-ticket-ok@3x.png 3x" class="ilust_ticket_ok">
+        <div class="col-xs-12 noP" style="height: 15%; top: 3%;">
+          <button md-raised-button class="col-xs-5 btn-ticket"
+            style="border-radius: 25px;min-height: 0px; height: 96%;margin-left: 7% !important;"
+            (click)="sendPrintbtn()"
+            [disabled]="isButtonDisabled()">{{getLiteral('change_delivered_component', 'literal_Ticket')}}</button>
+          <button md-raised-button class="col-xs-5 btn-factura"
+            style="border-radius: 25px;min-height: 0px; height: 96%;margin-left: 3% !important;"
+            (click)="requestInvoiceClick(true)"
+            [disabled]="isButtonDisabledFactura()">{{getLiteral('change_delivered_component', 'literal_Factura')}}</button>
+        </div>
+        <div class="col-xs-12 noP"
+          [ngStyle]="{background: 'url(assets/images/timer-bg.svg)','background-size': 'cover'}"
+          style="width: 100%;height: 6%;border-radius: 100px;margin-top:10%;object-fit: contain;background-color: #ffffff;border: 4px solid #ffffff;">
+          <!-- <img id="progressBar" class="col-xs-12 noP" style="background-color: #00627d;width:0%;height: 100%;border-radius: 100px;background-repeat:repeat-y;"
+                src="assets/images/timer-inside.png"
+                srcset="assets/images/timer-inside@2x.png 2x,
+                assets/images/timer-inside@3x.png 3x"> -->
+          <div id="progressBar"
+            style="width:0%;background-image: url('assets/images/timer-inside.png'); background-color: #00627d; height: 100%; border-radius: 100px; background-repeat: repeat;">
+          </div>
+        </div>
+        <div class="col-xs-12 noP" (click)="fnStopPayment(isStop)" style="text-align: center; cursor: pointer;"
+          *ngIf="showButtonStopPayment">
+          <h4 class="col-xs-12 noP">{{getLiteral('change_delivered_component', 'literal_fnStop1')}} {{secondConfig}}
+            {{getLiteral('change_delivered_component', 'literal_fnStop2')}}</h4>
+          <h4 class="col-xs-12 noP" style="font-weight: bold">{{messageAccion}}</h4>
+        </div>
+      </div>
+
+    </section>
+  </div>
+</div>

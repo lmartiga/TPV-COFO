@@ -1,0 +1,50 @@
+.pumpSupplySale {
+    position: relative;
+    margin-top: 0;
+    height: 100%;
+}
+.pumpamountsupply {
+    // position: absolute;
+    height: 50%;
+    width: 100%;
+    border-top: 1px #eae7e4 solid;
+}
+.pumpamountsupplyNoBorder {
+    position: absolute;
+    height: 50%;
+    width: 100%;
+}
+.pumpamountsupplyBottom {
+    bottom: 0;
+	height: 50%;
+	overflow: hidden;
+	position: absolute;
+    width: 100%;
+}
+.pumpamountsupplyrelative {
+    position: absolute;
+    height: 50%;
+    border-top: 1px #eae7e4 solid;
+    width: 100%;
+}
+
+.content-info-pump-img {
+    bottom: 0 !important;
+  }
+.image-footer {
+    height: 100%;
+    top: 100%;
+}
+
+.pump-icon {
+    top: 25;
+}
+
+.number-span-pump {
+    margin-left: -10%;
+    font-size: 1em;
+    vertical-align: middle;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+}

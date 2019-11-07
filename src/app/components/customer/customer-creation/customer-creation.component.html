@@ -1,0 +1,83 @@
+
+<div class="col-xs-12 noP">
+  <form #createCustomerForm="ngForm" (ngSubmit)="createCustomer(createCustomerForm.valid)">
+    <div [ngClass]="tininputclass">
+      <input tpvKeyboard type="text" class="form-control" required placeholder="DNI o CIF*" name="tin" [(ngModel)]="customer.tin" #tinInput #tin="ngModel">
+      <div *ngIf="tin.invalid && (tin.dirty || tin.touched || createCustomerForm.submitted)">
+        <div class="txt-error" *ngIf="tin.errors.required">{{messageErrorList.tin}}</div>
+      </div>
+    </div>
+    <div class="col-xs-6" [hidden]="!showTypeTinList">
+      <select  type="text" class="form-control" name="typeTin" [(ngModel)]="customer.tinTypeId" #tinTypeId="ngModel">
+        <option value="" class="placeholder" disabled [selected]="true">{{getLiteral('customer_creation_component', 'placeHolder_CreateCustomer_IdentityType')}}</option>
+        <option value=""></option>
+        <option *ngFor="let typeTin of tinTypeList" value="{{typeTin.id}}">
+          {{typeTin.name}}
+        </option>
+      </select>
+    </div>
+    <div class="col-xs-12">
+      <input tpvKeyboard type="text" class="form-control" required placeholder="Nombre o Razón Social*" name="businessName" [(ngModel)]="customer.businessName" #businessName="ngModel">
+      <div *ngIf="businessName.invalid && (businessName.dirty || businessName.touched || createCustomerForm.submitted)">
+          <div class="txt-error" *ngIf="businessName.errors.required">{{messageErrorList.businessName}}</div>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      <input tpvKeyboard (blur)="onCountryChange()" (keyup)="onInputCountryChange()" class="form-control" type="text" placeholder="País*" mdInput [mdAutocomplete]="auto0" required name="country" [(ngModel)]="customerAddress.country.name" #country="ngModel">
+      <md-autocomplete #auto0="mdAutocomplete">
+        <md-option *ngFor="let country of filteredCountries" [value]="country.name" (click)="onCountrySelected()">
+          {{ country.name }}
+        </md-option>
+      </md-autocomplete>
+      <div *ngIf="!isCountryValid() && (country.dirty || country.touched || createCustomerForm.submitted)">
+        <div class="txt-error">{{messageErrorList.country}}</div>
+    </div>
+    </div>
+    <div class="col-xs-12">
+      <input tpvKeyboard (blur)="onCityChange()" (keyup)="onInputCityChange()" class="form-control" type="text" placeholder="Ciudad*" mdInput [mdAutocomplete]="auto" required name="city" [(ngModel)]="customerAddress.city.name" #city="ngModel">
+      <md-autocomplete #auto="mdAutocomplete">
+        <md-option *ngFor="let city of filteredCities" [value]="city.name" (click)="onCitySelected()">
+          {{ city.name }}
+        </md-option>
+      </md-autocomplete>
+      <div *ngIf="city.invalid && (city.dirty || city.touched || createCustomerForm.submitted)">
+          <div class="txt-error" *ngIf="city.errors.required">{{messageErrorList.city}}</div>
+      </div>
+    </div>
+    <div class="col-md-4 col-xs-12">
+      <input tpvKeyboard type="text" class="form-control" name="postalCode" [(ngModel)]="customerAddress.city.postalCode" placeholder="CP*" required #postalCode="ngModel">
+      <div *ngIf="postalCode.invalid && (postalCode.dirty || postalCode.touched || createCustomerForm.submitted)">
+        <div class="txt-error" *ngIf="postalCode.errors.required">{{messageErrorList.postalCode}}</div>
+      </div>
+    </div>
+    <div class="col-md-8 col-xs-12">
+      <input tpvKeyboard (blur)="onProvinceChange()" (keyup)="onInputProvinceChange()"  #provinceSearch  class="form-control" type="text" placeholder="Provincia*" mdInput [mdAutocomplete]="auto2" required name="province" [(ngModel)]="customerAddress.city.provinceName" #province="ngModel">
+      <md-autocomplete  #auto2="mdAutocomplete">
+        <md-option *ngFor="let province of filteredProvinces" [value]="province.name" (click)="onProvinceSelected()">
+          {{ province.name }}
+        </md-option>
+      </md-autocomplete>
+      <div *ngIf="province.invalid && (province.dirty || province.touched || createCustomerForm.submitted)">
+          <div class="txt-error" *ngIf="province.errors.required">{{messageErrorList.province}}</div>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      <input tpvKeyboard type="text" class="form-control" required name="street" [(ngModel)]="customerAddress.street" #street="ngModel" placeholder="Domicilio*">
+      <div *ngIf="street.invalid && (street.dirty || street.touched || createCustomerForm.submitted)">
+        <div class="txt-error" *ngIf="street.errors.required">{{messageErrorList.street}}</div>
+      </div>
+    </div>
+    <div class="col-xs-12" *ngIf="mustRequestCustomerPlate">
+      <input tpvKeyboard type="text" class="form-control" placeholder="Matricula" [(ngModel)]="txtPlate"[ngModelOptions]="{standalone: true}">
+    </div>
+
+  </form>
+  <ng-container *ngIf="isRequestingCreateCustomer()">
+    <div class="col-xs-12 noP spinnerSlidder">
+      <md-progress-spinner mode="indeterminate"></md-progress-spinner>
+    </div>
+  </ng-container>
+</div>
+<div class="col-xs-12 rowBottom noP">
+  <button md-raised-button class="col-xs-12" [disabled]="isRequestingCreateCustomer()" (click)="btnCreateClick()">{{getLiteral('customer_creation_component', 'button_CreateCustomer_Create')}}</button>
+</div>

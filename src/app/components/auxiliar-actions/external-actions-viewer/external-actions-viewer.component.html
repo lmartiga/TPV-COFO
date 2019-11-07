@@ -1,0 +1,17 @@
+<div class="iframe" style="width: 100%;height: 100%">
+<iframe id="iframeTPVAction" style="width: 100%;height: 100%" [src]="_pagina"> <!-- TODO: las propiedades públicas no se nombran con _-->
+    <p>Your browser does not support iframes.</p>
+</iframe>
+</div>
+<input #date type="hidden" [matDatepicker]="datePickerExternalAction" id="datePickerExternalAction" class="form-control" (click)="datePickerExternalAction.open()" (dateChange)="valueChange(date.value)">
+<mat-datepicker #datePickerExternalAction [touchUi]="true"></mat-datepicker>
+
+<script>
+    $(document).ready(function(){
+    });
+
+    function closeIFrame(){
+        $('#iframeTPVAction').remove();
+    }
+    
+</script>

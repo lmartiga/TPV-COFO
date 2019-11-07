@@ -1,0 +1,11 @@
+<ng-container *ngIf="dispatchNoteMandatory; else paymentMethods">
+    <button md-raised-button color="primary2" (click)="requestEndSale(3)" [disabled]="isButtonDisabled()" class="col-xs-12">{{buttonTicketActionDeliveryLiteral}}</button>
+</ng-container>
+<ng-template #paymentMethods>
+    <button md-raised-button color="primary2" (click)="fnChangedDelivered(0)" [disabled]="isButtonDisabled()" class="col-xs-4" *ngIf="currentChanged.typeCall===0">{{buttonTicketActionCashLiteral}}</button>
+    <button md-raised-button color="primary2" (click)="fnCharged()" class=" currentChanged.typeCall===1 ? col-xs-12 : col-xs-4" *ngIf="false">{{buttonTicketActionExactLiteral}} {{ currentDocument.totalAmountWithTax |number:formatConfig.moneyPipeFormat }} {{baseCurrency.symbol}}</button>
+    <button md-raised-button color="primary2" (click)="requestEndSale(1)" [disabled]="isButtonDisabled()" class="col-xs-4" *ngIf="currentChanged.typeCall===0">{{buttonTicketActionCardLiteral}}</button>
+    <button md-raised-button color="primary2" (click)="requestEndSale(2)" [disabled]="isButtonDisabled()" class="col-xs-4" *ngIf="currentChanged.typeCall===0">{{buttonTicketActionMixLiteral}}</button>
+</ng-template>
+<button md-raised-button color="primary1" (click)="loyalty()" [disabled]="isButtonDisabled()" class="col-xs-6" *ngIf="false">{{buttonTicketActionLoyaltyLiteral}}</button>
+<button md-raised-button color="primary1" (click)="btnOpenCashDrawer()" [disabled]="isButtonDisabled()" class="col-xs-6" *ngIf="false">{{buttonTicketActionBoxLiteral}}</button>

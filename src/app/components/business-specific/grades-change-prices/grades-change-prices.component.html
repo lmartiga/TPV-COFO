@@ -1,0 +1,108 @@
+<h5 class="auxiliar-action-title">{{getLiteral('grades_change_prices_component', 'changePrice')}}</h5>
+<ng-container *ngIf="showSpinner()">
+  <div class="col-xs-12 noP spinnerSlidder">
+    <md-progress-spinner mode="indeterminate"></md-progress-spinner>
+  </div>
+</ng-container>
+
+<div class="col-12">
+<ng-container *ngIf="hasAnyGradePriceListAmplified() === true">
+<form #gradesChangePricesForm="ngForm" [ngClass]="showSpinner() ? 'disabled' : ''" novalidate (ngSubmit)="onSubmit()">
+  <div class="col-xs-12 divOverflow noP">
+        <table class="table">
+            <thead>
+              <tr>
+                <th class="txtLeft col-lg-4 col-xs-4 th">{{getLiteral('grades_change_prices_component', 'product')}}</th>
+                <th class="txtLeft col-lg-4 col-xs-4 th">{{getLiteral('grades_change_prices_component', 'currentPrice')}}</th>
+                <th class="txtRight col-lg-4 col-xs-4 th">{{getLiteral('grades_change_prices_component', 'newPrice')}}</th>
+              </tr>
+            </thead>
+      
+            <tbody>
+              <tr *ngFor="let gradePrice of gradePriceListAmplified; let i = index;">
+                <td class="txtLeft col-lg-4 col-xs-4">{{ gradePrice.gradeName }} </td>
+                <td class="txtLeft col-lg-4 col-xs-4">{{ gradePrice.price }}</td>
+                <td class="txtRight col-lg-4 col-xs-4 noP" >
+                  <input
+                    tpvKeyboard
+                    class="fuel-price-input form-control txtRight ng-pristine ng-invalid ng-touched"
+                    name="newPrice{{i}}"
+                    autocomplete="off"
+                    id="idPriceNew"
+                    name="amount"
+                    type="text"
+                    required
+                    [(ngModel)]="gradePrice.newPrice" 
+                    #newPrice{{i}}="ngModel"
+                    [pattern]="newPricePattern()"
+                    (click)="$event.target.select()"
+                    [disabled]="( isDeferred===true && (gradePrice.gradeReference===undefined || gradePrice.gradeReference==='' || gradePrice.gradeReference===null) )? true : false"
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="gradesChangePricesForm.invalid">
+              <div class="txt-error">{{newPriceValidationErrorMessage}}</div>
+            </div>
+  </div>
+  <div class="tpv-mixt-payment-amount">
+          <div class="col-xs-12">
+              <textarea tpvKeyboard type="text" class="form-control taObservaciones" name="remarks" [(ngModel)]="observations"
+                #remarks="ngModel" placeholder="{{getLiteral('grades_change_prices_component', 'observations')}}">
+              </textarea>
+              <div [hidden]="observations == undefined || observations == ''">
+                <md-icon (click)="observations=''" class="material-icons cancel input">cancel</md-icon>
+              </div>
+          </div>
+          <div class="col-xs-2">
+              <div class="input-group" style="margin-top: 10px">
+                <md-checkbox
+                [checked]="isDeferred"
+                (change)="isDeferred = !isDeferred"
+                >
+                {{getLiteral('grades_change_prices_component', 'deferred')}} 
+                </md-checkbox>
+            </div>
+        </div>
+        <!-- <div [ngClass]="isDeferred ? '' : 'disabled'" > -->
+          <div class="col-xs-5">
+              <div class="input-group" [ngClass]="isDeferred ? '' : 'disabled'">
+                  <!-- <span class="input-group-addon">
+                    <md-icon class="material-icons">calendar_today</md-icon>
+                  </span> -->
+                  <input [matDatepicker]="DiferidoPicker" [disabled]="!isDeferred" (click)="DiferidoPicker.open()" class="form-control" 
+                    [(ngModel)]="dateDeferred" name="namedateDeferred" [min]="minDateDeferred"
+                    placeholder="{{getLiteral('grades_change_prices_component', 'deferred_date')}}">
+                  <mat-datepicker #DiferidoPicker [touchUi]="true"></mat-datepicker>
+                  <div [hidden]="dateDeferred?.length<3">
+                    <md-icon (click)="dateDeferred=null" class="material-icons cancel input">cancel</md-icon>
+                  </div>
+                </div>
+          </div> 
+          <div class="col-xs-5">
+            <div class="input-group" [ngClass]="(isDeferred===true)? '' : 'disabled'">
+                <span class="input-group-addon">
+                  <md-icon class="material-icons">timer</md-icon>
+                </span>
+                <input tpvKeyboard type="Time" class="inputHora" [(ngModel)]="hourDeferred" id="idHourDeferred" 
+                name="nameHourDeferred" min="00:00:00" (change)="inputHourDeferredChangeHandler($event)" max="24:00:00"  />
+              </div>
+        </div>
+       <!-- </div> -->
+ 
+  </div>  
+  <div class="button-bottom">
+    <button md-raised-button class="col-xs-12" type="submit" [disabled]="gradesChangePricesForm.invalid || isChangeButtonAvaible() === false" >{{getLiteral('grades_change_prices_component', 'change')}}</button>
+  </div>
+</form>
+</ng-container>
+</div>
+
+<ng-container *ngIf="hasAnyGradePriceListAmplified()===false && showSpinner()===false">
+  <div class="col-xs-12 txt-error">
+
+      <h4 class="txtCenter">{{getLiteral('grades_change_prices_component', 'notProducts')}}</h4>
+
+  </div>
+</ng-container>

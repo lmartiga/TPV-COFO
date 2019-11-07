@@ -1,0 +1,13 @@
+{
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "gitflow4code.features": [
+    {
+      "name": "feature/develop-sevilla-waylet",
+      "base": "develop"
+    },
+    {
+      "name": "feature/develop-sevilla-credito-local",
+      "base": "develop"
+    }
+  ]
+}

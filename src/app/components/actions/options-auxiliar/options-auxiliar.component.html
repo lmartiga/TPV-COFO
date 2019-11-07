@@ -1,0 +1,6 @@
+  <button *ngIf="blnActiveReturn" md-raised-button class="key-button button_ico_back_left" (click) ="fnReturn()">
+    <img src="assets/images/ico-back.svg" class="buttonBack">
+    {{getLiteral('options_auxiliar','button_Return')}}</button>
+  <button #botonParar [disabled]="btnStopDisabled" md-raised-button class="key-button button_Alert_right" (click)="btnStopclick()">
+    {{btnStopChecked ? activar: parar }}
+  </button>

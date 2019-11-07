@@ -1,0 +1,99 @@
+<div> 
+<h5 class="auxiliar-action-title">Anulación Parcial</h5>
+<div class="col-xs-6">
+  <div class="input-group">
+    <span class="input-group-addon">
+      <md-icon class="material-icons">search</md-icon>
+    </span>
+    <input [matDatepicker]="datePickerAnularDesde" (click)="datePickerAnularDesde.open()" class="form-control" [(ngModel)]="dateTicketDesde"
+      placeholder="Fecha Desde">
+    <mat-datepicker #datePickerAnularDesde [touchUi]="true"></mat-datepicker>
+    <div [hidden]="dateTicketDesde==undefined">
+      <md-icon (click)="dateTicketDesde=null" class="material-icons cancel input">cancel</md-icon>
+    </div>
+  </div>
+  <div [hidden]="!messageErrorList.Fecha.show " class="txt-error">{{messageErrorList.Fecha.text}}</div>
+</div>
+<div *ngIf="showError" class="col-xs-12 txt-error" [ngStyle]="{'white-space':'pre-line'}">
+  {{errorText}}
+</div>
+<div class="col-xs-6">
+  <div class="input-group">
+    <span class="input-group-addon">
+      <md-icon class="material-icons">search</md-icon>
+    </span>
+    <input [matDatepicker]="datePickerAnularHasta" (click)="datePickerAnularHasta.open()" class="form-control" [(ngModel)]="dateTicketHasta"
+      placeholder="Fecha Hasta">
+    <mat-datepicker #datePickerAnularHasta [touchUi]="true"></mat-datepicker>
+    <div [hidden]="dateTicketHasta==undefined">
+      <md-icon (click)="dateTicketHasta=null" class="material-icons cancel input">cancel</md-icon>
+    </div>
+  </div>
+  <div [hidden]="!messageErrorList.Fecha.show " class="txt-error">{{messageErrorList.Fecha.text}}</div>
+</div>
+<div *ngIf="showError" class="col-xs-12 txt-error" [ngStyle]="{'white-space':'pre-line'}">
+  {{errorText}}
+</div>
+</div>
+<div class="col-xs-6">
+  <div class="input-group">
+    <span class="input-group-addon">
+      <md-icon class="material-icons">search</md-icon>
+    </span>
+    <input tpvKeyboard class="form-control" [(ngModel)]="ammountDesde" placeholder="ImporteDesde" type="text" id="ammountDesde" (click)="$event.target.select()">
+    <div [hidden]="ammountDesde==undefined">
+      <md-icon (click)="ammountDesde=null" class="material-icons cancel input">cancel</md-icon>
+    </div>
+  </div>
+  <div [hidden]="!messageErrorList.Importe.show " class="txt-error">{{messageErrorList.Importe.text}}</div>
+</div>
+<div class="col-xs-6">
+  <div class="input-group">
+    <span class="input-group-addon">
+      <md-icon class="material-icons">search</md-icon>
+    </span>
+    <input tpvKeyboard class="form-control" [(ngModel)]="ammountHasta" placeholder="ImporteHasta" type="text" id="ImporteHasta" (click)="$event.target.select()">
+    <div [hidden]="ammountHasta==undefined">
+      <md-icon (click)="ammountHasta=null" class="material-icons cancel input">cancel</md-icon>
+    </div>
+  </div>
+  <div [hidden]="!messageErrorList.Importe.show " class="txt-error">{{messageErrorList.Importe.text}}</div>
+</div>
+<!-- <div>{{listaDocumentos | json}}</div> -->
+<div>Esto son los 30 ultimos tickets emitidos : </div>
+<table>
+  <thead>
+      <tr>
+          <td></td>
+          <td>Numero Ticket</td>
+          <td>Fecha</td>
+          <td>Total Ticket</td>  
+      </tr> 
+  </thead>
+  <tbody>       
+      <tr *ngFor="let model of listaDocumentos">
+           <td>
+              <input type="radio" name="radioNumber" [value]="model.documentNumber" (change)="radioChangeHandler($event)"/>
+           </td>
+          <td>{{ model.documentNumber }}</td>
+          <td>{{ model.emissionUTCDateTime }}</td>
+          <td>{{ model.taxableAmount }}</td>          
+      </tr>
+  </tbody>
+</table>
+<div [hidden]="documentoAnular==undefined || documentoAnular==null"> Documento a anular {{documentoAnular | json}}</div>
+<!-- <ng-container *ngIf="isSearchingTicket()">
+  <div class="col-xs-12 noP spinnerSlidder">
+    <md-progress-spinner mode="indeterminate"></md-progress-spinner>
+  </div>
+</ng-container> -->
+<div>
+
+</div>
+<div>
+  <div class="button-bottom" >
+    <button md-raised-button class="col-xs-12" name="Completo" (click)="cancelDocument($event)">COMPLETO</button>
+    <button md-raised-button class="col-xs-12">CARBURANTE</button>
+    <button md-raised-button class="col-xs-12">TIENDA</button>
+  </div>
+</div>

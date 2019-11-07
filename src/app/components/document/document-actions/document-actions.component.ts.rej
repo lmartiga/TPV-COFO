@@ -1,0 +1,16 @@
+diff a/src/app/components/document/document-actions/document-actions.component.ts b/src/app/components/document/document-actions/document-actions.component.ts	(rejected hunks)
+@@ -13,14 +13,12 @@
+ import { ConfirmActionType } from 'app/shared/confirmAction/confirm-action-type.enum';
+ import { Document } from 'app/shared/document/document';
+ import { FinalizingDocumentFlowType } from 'app/shared/document/finalizing-document-flow-type.enum';
+-import { DynamicActionLaunchDisplayItem } from 'app/shared/dynamic-actions/dynamic-action-launch-display-item';
+ import { PaymentPurpose } from 'app/shared/payments/PaymentPurpose.enum';
+ import { DocumentLinePromotion } from 'app/shared/document/document-line-promotion';
+ import { DocumentInternalService } from 'app/services/document/document-internal.service';
+ import { LoyaltyActionType } from 'app/shared/loyalty/loyalty-action-type.enum';
+ import { LoyaltyAttributionInformation } from 'app/shared/loyalty/loyalty-attribution-information';
+ import { StatusBarService } from 'app/services/status-bar/status-bar.service';
+-import { RunawayPaymentInternalService } from 'app/services/payments/runaway-payment-internal.service';
+ 
+ @Component({
+   selector: 'tpv-document-actions',

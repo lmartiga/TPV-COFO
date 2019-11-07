@@ -1,0 +1,15 @@
+{
+  "name": "Launch Customer",
+  "type": "chrome",
+  "request": "launch",
+  "url": "http://localhost:4200/#",
+  "port": 9223,
+  "sourceMaps": true,
+  "diagnosticLogging": true,
+  "webRoot": "${workspaceRoot}",
+  "runtimeArgs": [
+      "--disable-session-crashed-bubble",
+      "--disable-infobars"
+  ],
+  "userDataDir": "${workspaceRoot}/.vscode/chrome"
+}

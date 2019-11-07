@@ -1,0 +1,49 @@
+<!--:
+  * TODO
+  * El estilo inline del main element lo puse para probar el tema que hablamos el otro día
+  * del posicionamiento de los elementos para el z-index, pero habrá que quitarlo de aquí
+-->
+<md-drawer-container
+  class="example-container"
+  autosize
+  (click)="onDetectClickableInDOM()"
+  (keypress)="onDetectClickableInDOM()">
+
+  <md-drawer
+    #drawer
+    class="example-sidenav"
+    [ngClass]="{'side-bar-fullscreen':!visibleSidebarInfo, 'open-side-bar':styleOpenOrClose}"
+    (keydown)="onKeydown($event)"
+    (click)="onDetectClickableInDOM()"
+    (keypress)="onDetectClickableInDOM()">
+
+    <tpv-sidebar></tpv-sidebar>
+
+  </md-drawer>
+  <!-- <md-drawer #drawer class="example-sidenav" mode="push" style="width: 20%">
+    <tpv-information-sidenav></tpv-information-sidenav>
+  </md-drawer> -->
+
+  <main
+    tpvMainElement
+    class="main"
+    style="position: relative;"
+    #container>
+
+    <tpv-virtual-keyboard
+      [hidden]="!onHiddenKeyBoard(showKeyboard)"
+      [tpvNg2Draggable]="true">
+    </tpv-virtual-keyboard>
+
+    <ng-container
+      #mainContainerHost>
+    </ng-container>
+    
+  </main>
+
+  <footer
+    class="footer">
+    <tpv-status-bar (openInformationSidenavRequested)="openSlidenav()" (openLookScreenSidenavRequested)="openLookScreen()"></tpv-status-bar>
+  </footer>
+
+</md-drawer-container>

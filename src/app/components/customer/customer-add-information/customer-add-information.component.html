@@ -1,0 +1,28 @@
+<div class="col-xs-12 noP">
+  <h5 class="auxiliar-action-title">{{getLiteral('customer_add_information_component', 'header_CustomerAddInformation')}}</h5>
+</div>
+<div class="col-md-12" #headerPreview [style.font-size.em]="1.5">
+  <div class="col-md-6 izq">{{getLiteral('customer_add_information_component', 'headerpreview_TIN')}}</div>
+  <div class="col-md-6 txtRight der bold">{{customerTin()}}</div>
+  <div class="col-md-6 izq">{{getLiteral('customer_add_information_component', 'headerpreview_CustomerName')}}</div>
+  <div class="col-md-6 txtRight der bold">{{customerName()}}</div>
+  <div class="col-md-6 izq">{{getLiteral('customer_add_information_component', 'headerpreview_CustomerAdress')}}</div>
+  <div class="col-md-6 txtRight der bold">{{customerAdress()}}</div>
+  <div class="col-md-6 izq">{{getLiteral('customer_add_information_component', 'headerpreview_Balance')}}</div>
+  <div class="col-md-6 txtRight der bold">{{driverBalance()}}</div>
+</div>
+<div class="col-md-12" *ngIf="mustRequestCustomerPlate && editPlate">
+  <input tpvKeyboard
+              [(ngModel)]="txtPlate"
+              class="form-control"
+              name="customer"
+              placeholder="Introduce matrícula"
+              #customer
+              type="text" [autofocus]="true"
+              autocomplete="offf"
+              >
+</div>
+<div class="col-xs-12 button-bottom noP">
+  <button md-raised-button (click)="btnAceptClick()" class="col-xs-6">{{getLiteral('customer_add_information_component', 'button_CustomerAddInformation_OK')}}</button>
+  <button md-raised-button (click)="btnChangeCustomerClick()" class="col-xs-6">{{getLiteral('customer_add_information_component', 'button_CustomerAddInformation_ChangeCustomer')}}</button>
+</div>

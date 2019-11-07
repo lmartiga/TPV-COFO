@@ -1,0 +1,101 @@
+.ticket_logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  div#imagenLogo:after {
+    content: url('../../../assets/images/ticket-logo-new.png'); 
+    z-index: 9999;
+   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    object-fit: contain;
+      
+    -webkit-pointer-events: none;
+    -moz-pointer-events: none;
+    -ms-pointer-events: none;
+    -o-pointer-events: none;
+    pointer-events: none;
+  
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+  }
+
+@media only screen and (max-width: 650px) {
+  div#imagenLogo:after {
+    margin-left: 22%;
+    bottom: 1%;
+  }
+} 
+
+@media only screen and (max-width: 700px) and (min-width: 650px) {
+  div#imagenLogo:after {
+    margin-left: 24%;
+    bottom: 1%;
+  }
+} 
+
+@media only screen and (max-width: 800px) and (min-width: 700px) {
+  div#imagenLogo:after {
+    margin-left: 27%;
+    bottom: 1%;
+  }
+} 
+ 
+@media only screen and (max-width: 950px) and (min-width: 800px) {
+  div#imagenLogo:after {
+    margin-left: 29.5%;
+    bottom: 1%;
+  }
+} 
+ 
+@media only screen and (max-width: 1070px) and (min-width: 950px) { 
+  div#imagenLogo:after {
+    margin-left: 32%;
+    bottom: 1%;
+  }
+}
+
+@media only screen and (max-width: 1050px) and (min-width: 1070px) { 
+  div#imagenLogo:after {
+    margin-left: 33%;
+    bottom: 2%;
+  }
+}
+
+@media only screen and (max-width: 1100px) and (min-width: 1050px) { 
+  div#imagenLogo:after {
+    margin-left: 33.5%;
+    bottom: 2%;
+  }
+}
+  
+@media only screen and (max-width: 1200px) and (min-width: 1100px) { 
+  div#imagenLogo:after {
+    margin-left: 34%;
+    bottom: 2%;
+  }
+}
+@media only screen and (max-width: 1500px) and (min-width: 1200px) { 
+  div#imagenLogo:after {
+    margin-left: 36.5%;
+    bottom: 2%;
+  }
+}
+@media only screen and (max-width: 1700px) and (min-width: 1500px) { 
+  div#imagenLogo:after {
+    margin-left: 38%;
+    bottom: 2%;
+  }
+}
+@media only screen and (min-width: 1700px) { 
+  div#imagenLogo:after {
+    margin-left: 40%;
+    bottom: 2%;
+  }
+}

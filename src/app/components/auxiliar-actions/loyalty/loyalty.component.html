@@ -1,0 +1,53 @@
+<h5 class="auxiliar-action-title">Loyalty</h5>
+<form #insertLoyaltyCard="ngForm" (ngSubmit)="simulateLoyaltyAttribution()">
+  <div class="col-xs-12">
+    <input
+      tpvKeyboard
+      class="form-control txtRight"
+      [(ngModel)]="loyaltyCardNumber"
+      name="loyaltyCard"
+      type="text" 
+      required
+      #loyaltyCardNumberInput="ngModel"
+      #cardNumberInput
+      placeholder="Insert loyalty card number"
+      autocomplete="off"
+      autofocus="autofocus"
+      (enter)="simulateLoyaltyAttribution()"
+      (click)="$event.target.select()">
+    <div *ngIf="loyaltyCardNumberInput.invalid && (loyaltyCardNumberInput.dirty || loyaltyCardNumberInput.touched)">
+      <div *ngIf="loyaltyCardNumberInput.errors?.required" class="txt-error">Loyalty card number required</div>
+    </div>
+    <div *ngIf="errorMessage != ''" class="txt-error">{{ errorMessage }}</div>
+  </div>
+</form>
+
+<ng-container *ngIf="searchingForAttributions">
+  <div class="col-xs-12 noP spinnerSlidder">
+    <md-progress-spinner mode="indeterminate"></md-progress-spinner>
+  </div>
+</ng-container>
+<div [hidden]="loyaltyAttributionSimulationDetails.length === 0 || loyaltyCardNumberInput.invalid || searchingForAttributions">
+    <ng-container *ngIf="loyaltyAttributionSimulationDetails.length > 0">
+      <table class="table cliente">
+        <thead>
+          <tr>
+            <th class="col-md-4">Benefit</th>
+            <th class="col-md-4">Balance before</th>
+            <th class="col-md-4">Balance after</th>
+          </tr>
+        </thead>
+          <tbody>
+            <tr *ngFor="let attributionDetail of loyaltyAttributionSimulationDetails">
+              <td>{{ attributionDetail?.benefitName }}</td>
+              <td>{{ attributionDetail?.balanceBefore }}</td>
+              <td>{{ attributionDetail?.balanceAfter }}</td>
+            </tr>
+          </tbody>
+      </table>
+      <div class="button-bottom">
+        <button md-raised-button class="col-xs-6" (click)="accumulate()">Accumulate</button>
+        <button md-raised-button class="col-xs-6" (click)="redeem()">Redeem</button>
+      </div>
+    </ng-container>
+</div>

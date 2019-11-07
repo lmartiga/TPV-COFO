@@ -1,0 +1,59 @@
+<div class="container width100" *ngIf="supplyTransactions;else loadingWaitingOps">
+  <div class="row">
+    <div class="col-lg-12 bck-primary1 txt-primary4 txtCenter noP">
+      <h5 class="auxiliar-action-title">{{headerText}}</h5>
+    </div>
+  </div>
+  <div class="row">
+      <div class="container width100" id="fpacWaitingOperations">
+        <div class="row woapRowButtons">
+          <div class="col-xs-12">
+            <button md-raised-button *ngFor="let operation of supplyTransactions;let i =index" class="pumpWaitingOperation col-xs-3 noP border-shadow" (click)="onClickSupplyTransaction(operation)">
+              <div class="waitingOperation" [ngClass]="setClassSupplyTransaction(operation)">
+                <div class="pNumber">
+                      <span>{{operation.fuellingPointId}}</span>
+                    </div>
+                <div class="woDataWrapper">
+                  <div class="woAmount txtShadow">{{operation.money}} {{formatConfig?.currency?.symbol}}</div>
+                  <div class="woVolume txtShadow" [ngClass]="{visibleHidden:operation.volume==undefined}">{{operation.volume}} {{formatConfig?.volume?.symbol}}</div>
+                </div>
+                <img class="woProduct" [src]="getImgFromGrade(operation.gradeId)">
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="row">
+      <div class="container width100" id="fpacWaitingOperations">
+        <div class="row woapRowButtons">
+          <div class="col-xs-12">
+            <button md-raised-button *ngFor="let operation of supplyTransactionsAnulated;let i =index" class="pumpWaitingOperation col-xs-3 noP border-shadow" (click)="onClickSupplyTransaction(operation)">
+              <div class="waitingOperation" [ngClass]="setClassSupplyTransaction(operation)">
+                <div class="pNumber">
+                      <span>{{operation.fuellingPointId}}</span>
+                    </div>
+                <div class="woDataWrapper">
+                  <div class="woAmount txtShadow">{{operation.money}} {{formatConfig?.currency?.symbol}}</div>
+                  <div class="woVolume txtShadow" [ngClass]="{visibleHidden:operation.volume==undefined}">{{operation.volume}} {{formatConfig?.volume?.symbol}}</div>
+                </div>
+                <img class="woProduct" [src]="getImgFromGrade(operation.gradeId)">
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+<ng-template #loadingWaitingOps>
+  <div class="container width100">
+    <div class="row">
+      <div class="col-xs-12 noP spinnerSlidder">
+        <!-- <h4>
+          Retrieving waiting operations info from server...
+        </h4> -->
+        <md-progress-spinner mode="indeterminate"></md-progress-spinner>
+      </div>
+    </div>
+  </div>
+</ng-template>

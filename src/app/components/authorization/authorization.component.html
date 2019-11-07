@@ -1,0 +1,23 @@
+<h5 class="auxiliar-action-title">{{getLiteral('authorization_component', 'header')}}</h5>
+<form #authorizationForm="ngForm" autocomplete="off" (ngSubmit)="authorize()">
+  <div class="col-xs-12">
+    <input
+      tpvKeyboard
+      class="form-control"
+      name="authorizationField"
+      type="password"
+      required
+      [(ngModel)]="entityToAuthorize"
+      #authorizationInput
+      #authorizationEntityInput="ngModel"
+      placeholder="{{ placeholder }}"
+      autocomplete="off" 
+      autofocus="autofocus"
+      (enter)="authorize()"
+      (click)="$event.target.select()">
+      <div *ngIf="authorizationEntityInput.invalid && (authorizationEntityInput.dirty || authorizationEntityInput.touched)">
+        <div *ngIf="authorizationEntityInput.errors?.required" class="txt-error">{{getLiteral('authorization_component', 'texterror')}}</div>
+      </div>
+      <div *ngIf="errorMessage != ''" class="txt-error">{{ errorMessage }}</div>
+  </div>
+</form>

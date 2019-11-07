@@ -1,0 +1,162 @@
+<h5 class="auxiliar-action-title">INFORME VENTAS TPV</h5>
+<div>  
+  <form #documentSearchForm="ngForm">
+    <mat-accordion class="cuadroBusquedaTicket">
+      <!-- FILTROS -->
+      <mat-expansion-panel class="cuadroBusquedaTicket" [expanded]="filterPanelOpened" (opened)="filterPanelOpened = true" (closed)="filterPanelOpened = false"
+        hideToggle="true">
+        <mat-expansion-panel-header>
+          <md-panel-title>
+            FILTRAR
+          </md-panel-title>
+          <md-icon *ngIf="!filterPanelOpened" class="material-icons">add</md-icon>
+          <md-icon *ngIf="filterPanelOpened" class="material-icons">remove</md-icon>
+        </mat-expansion-panel-header>
+        <div >
+          <div >                      
+            <div  class="m-top10">
+              <div class="col-xs-6">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <md-icon class="material-icons">search</md-icon>
+                  </span>
+                  <input [matDatepicker]="buscarTicketDateDesdePicker" (click)="buscarTicketDateDesdePicker.open()" class="form-control"
+                    [(ngModel)]="fromEmissionDate" name="fromDate" placeholder="Fecha desde">
+                  <mat-datepicker #buscarTicketDateDesdePicker [touchUi]="true"></mat-datepicker>          
+                  <div [hidden]="false">
+                    <md-icon (click)="fromEmissionDate=undefined" class="material-icons cancel input">cancel</md-icon>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-6">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <md-icon class="material-icons">search</md-icon>
+                  </span>
+                  <input [matDatepicker]="buscarTicketDateHastaPicker" (click)="buscarTicketDateHastaPicker.open()" class="form-control"
+                    [(ngModel)]="toEmissionDate" name="toDate" placeholder="Fecha hasta">                  
+                  <mat-datepicker #buscarTicketDateHastaPicker [touchUi]="true"></mat-datepicker>                  
+                  <div [hidden]="false">
+                    <md-icon (click)="toEmissionDate=undefined" class="material-icons cancel input">cancel</md-icon>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-6">                  
+                 <input tpvKeyboard type="Time" class="inputHora" [(ngModel)]="timeFrom" id="inputTimeTo" name="inputTo" min="00:00:00" (change)="inputTimeToChangeHandler($event)" max="24:00:00" required />
+              </div>
+              <div class="col-xs-6">
+                  <input tpvKeyboard type="time" class="inputHora" [(ngModel)]="timeTo" id="inputTimeFrom" name="inputFrom" min="00:00:00" (change)="inputTimeFromChangeHandler($event)" max="24:00:00" required />
+              </div>
+            </div>            
+          </div>
+        </div>    
+        <div>
+        <div *ngFor="let radioB of radioButtonsGroup">
+            <div class="col-xs-6" style="font-size: 16px;">
+                <input type="radio" class="radioButt" name="radioNumber" [value]="radioB" [checked]="radioB === 'Resumen ventas'" (change)="radioChangeHandler($event)"/><div class="divRadio1"> {{radioB}} </div>
+            </div>       
+          </div>        
+          <!-- <md-label>Favorite food</md-label> -->                 
+          <md-select *ngIf="mostrarMultiSelect" [(ngModel)]="categoriaSelect" name="codigoCatg" placeholder="Selecciona Categoria" multiple>
+            <md-button-toggle layout-fill value="allCategorias" (click)="selectAllTest()">Seleccionar todo</md-button-toggle>
+            <md-button-toggle layout-fill value="allCategorias" (click)="cleanAllTest()">Borrar todo</md-button-toggle>
+            <md-option *ngFor="let categoria of categoriaList" [value]="categoria.codigo">
+              {{categoria.nombre}}
+            </md-option>
+          </md-select>         
+        </div>    
+        <div class="col-xs-12 noP">
+          <button class="col-xs-6 col-xxs-12 mat-raised-button mat-primary2"  md-raised-button (click)="searchDocumentsInforme()">Aceptar</button>
+          <button class="col-xs-6 col-xxs-12 mat-raised-button mat-primary2"  md-raised-button (click)="limpiarFiltrosBusquedas()">Limpiar</button>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <div [hidden]="textFilters.length < 5" class="filterText col-xs-12">Filtro: <i>{{textFilters}}</i></div>
+    <div>    
+    <div *ngIf="documentListVentas?.length > 0">
+      <br>
+      <span class="categoriasName">Resumen de ventas</span>
+      <br>
+      <table class="table">
+        <thead class="theadGrey">
+          <tr>
+            <th class="txtLeft">Fecha</th>
+            <th class="txtLeft">Tienda</th>
+            <th class="txtLeft">Carburante</th>
+            <th class=" txtLeft">Servicios</th> 
+            <th class=" txtRight">Total</th>         
+          </tr>
+        </thead>
+        <tbody *ngFor="let informeVentasResumen of documentListVentas; let i = index;">
+          <tr>
+            <td class="txtLeftDate">{{ informeVentasResumen.Fecha?.toLocaleDateString() }}</td>
+            <td class="txtLeft">{{ informeVentasResumen.Tienda | number }}</td>
+            <td class="txtLeft">{{ informeVentasResumen.Carburante | number }}</td>
+            <td class="txtLeft" >{{ informeVentasResumen.Servicios | number }}</td>
+            <td class="txtRight nowrap" >{{ informeVentasResumen.TotalDia | number }}</td>            
+          </tr>
+          <tr *ngIf="documentListVentas?.length - 1 == i">
+            <td class="txtLeftDate">Total</td>
+            <td class="txtLeft">{{ TotalGridRecaudacion.Tienda | number }}</td>
+            <td class="txtLeft">{{ TotalGridRecaudacion.Carburante | number }}</td>
+            <td class="txtLeft" >{{ TotalGridRecaudacion.Servicios | number }}</td>
+            <td class="txtRight nowrap" ></td>   
+          </tr>
+        </tbody>
+      </table>
+    </div>    
+    <div *ngIf="documentListRecaudacion?.length > 0 && !mostrarMultiSelect">
+      <br>
+      <span class="categoriasName">Resumen de recaudación</span>
+      <br>
+      <table class="table">
+        <thead class="theadGrey">
+          <tr>
+            <th>Fecha</th>
+            <th *ngFor="let itemCabecera of listaCabeceraMediosPago; let i = index;" class="txtLeft">{{itemCabecera}}</th>                     
+          </tr>
+        </thead>        
+        <tbody>
+            <tr *ngFor="let itemRecaudacion of documentListRecaudacion">
+              <td class="txtLeftDate"> {{ itemRecaudacion.Fecha?.toLocaleDateString() }}</td>
+              <td *ngFor="let itemMediosPago of listaCabeceraMediosPago"> {{ getImporteMediosPago(itemRecaudacion, itemMediosPago) | number}} </td>                
+            </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="listaAPintarCategorias?.length > 0">
+      <div *ngFor="let item of listaAPintarCategorias; let u = index;" [attr.data-index]="u">
+        <span class="categoriasName">{{ item.CategoriaName }}</span>
+        <table class="table">
+          <thead class="theadGrey">
+            <tr>
+              <th class="txtLeft">Fecha</th>
+              <th class="txtLeft">Articulo</th>
+              <th class="txtLeft">Cantidad</th>
+              <th class=" txtRight">Importe</th>            
+            </tr>
+          </thead>
+          <tbody *ngFor="let lineaCat of item.ListaLineas; let i = index;" [attr.data-index]="i">
+            <tr>
+              <td class="txtLeftDate">{{ lineaCat.Fecha?.toLocaleDateString() }}</td>
+              <td class="txtLeft">{{ lineaCat.Articulo }}</td>
+              <td class="txtLeft">{{ lineaCat.Cantidad }}</td>
+              <td class="txtRight nowrap" >{{ lineaCat.Importe | number }}</td>            
+            </tr>
+            <tr *ngIf="checkTotal(lineaCat,u,i)">
+                <td class="txtLeftDate">TOTAL {{ lineaCat.Fecha?.toLocaleDateString() }}</td>
+                <td class="txtLeftDate"></td>
+                <td class="txtLeftDate"></td>
+                <td class="txtRight nowrap" > {{ getImporte(lineaCat, u, i) | number}}</td>   
+            </tr>
+          </tbody>
+        </table>
+        <span class="categoriasName">Total {{ item.CategoriaName }} {{ getImporteTotal(item) | number}}</span>
+      </div>
+    </div>
+  </div>
+  </form>
+  <div>
+    <button md-raised-button class="col-xs-12 mat-raised-button mat-primary2" [disabled]="buttonImprimirBool" (click)="sendPrintInforme()">Imprimir</button>
+  </div>
+</div>  
