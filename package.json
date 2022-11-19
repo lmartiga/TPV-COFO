@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@angular-devkit/schematics": "0.0.34",
-    "@angular/cli": "1.4.4",
+    "@angular/cli": "15.0.0",
     "@angular/compiler-cli": "4.4.4",
     "@angular/language-service": "4.4.4",
     "@types/angular": "1.6.32",
